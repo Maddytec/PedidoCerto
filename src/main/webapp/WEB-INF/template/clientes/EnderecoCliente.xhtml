@@ -1,0 +1,182 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<script>
+/*Função responsavel por fechar o dialog após a inclusão do endereco*/
+function tratarInclusaoEndereco(args){
+	if(!args.validationFailed){
+		PF('inclusaoEnderecoDialog').hide();
+		}
+}
+</script>
+
+	<p:panelGrid columns="1" id="painelEndereco">
+		<p:button value="Adicionar endereço" style="margin-top: 20px"
+			onclick="PF('inclusaoEnderecoDialog').show(); return false" />
+	</p:panelGrid>
+
+	<p:dataTable id="enderecosTable" style="margin-top: 20px"
+		value="#{cadastroEnderecoBean.enderecosIncluidos}" var="endereco"
+		emptyMessage="Nenhum pedido encontrado" rows="10" paginator="true"
+		paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+		<p:column headerText="Logradouro" style="text-align: left">
+			<h:outputText value="#{endereco.logradouro}" />
+		</p:column>
+
+		<p:column headerText="Número" style="text-align: left; width: 50px">
+			<h:outputText value="#{endereco.numero}" />
+		</p:column>
+
+		<p:column headerText="Bairro" style="text-align: left; width: 130px">
+			<h:outputText value="#{endereco.bairro}" />
+		</p:column>
+
+		<p:column headerText="Complemento"
+			style="text-align: left; width: 130px">
+			<h:outputText value="#{endereco.complemento}" />
+		</p:column>
+
+		<p:column headerText="CEP" style="text-align: left; width: 100px">
+			<h:outputText value="#{endereco.cep}" />
+		</p:column>
+
+		<p:column headerText="Cidade" style="text-align: left; width: 130px">
+			<h:outputText value="#{endereco.cidade}" />
+		</p:column>
+
+		<p:column headerText="UF" style="text-align: left; width: 130px">
+			<h:outputText value="#{endereco.uf}" />
+		</p:column>
+
+		<p:column style="text-align: center; width: 70px">
+
+			<p:commandButton icon="ui-icon-pencil" title="Editar"
+				oncomplete="PF('edicaoEnderecoDialog').show(); return false;"
+				process="@this" update=":frm:edicaoEnderecoPanel">
+				<f:setPropertyActionListener
+					target="#{cadastroEnderecoBean.enderecoAEditar}"
+					value="#{endereco}" />
+			</p:commandButton>
+
+			<p:commandButton icon="ui-icon-trash" title="Excluir"
+				oncomplete="PF('confirmacaoExclusaoEndereco').show()"
+				process="@this" update=":frm:confirmacaoExclusaoEnderecoDialog">
+				<f:setPropertyActionListener
+					target="#{cadastroEnderecoBean.enderecoAExcluir}"
+					value="#{endereco}" />
+			</p:commandButton>
+		</p:column>
+	</p:dataTable>
+
+	<p:dialog header="Inclusão de endereco" id="enderecoDialog"
+		widgetVar="inclusaoEnderecoDialog" modal="true" resizable="false">
+
+		<h:panelGroup id="inclusaoPanel">
+
+			<p:messages autoUpdate="false" closable="true" id="msgDialog" />
+
+			<h:panelGrid columns="2">
+
+				<p:outputLabel value="Logradouro" for="logradouro" />
+				<p:inputText id="logradouro" style="width: 250px"
+					value="#{cadastroEnderecoBean.endereco.logradouro}">
+				</p:inputText>
+
+				<p:outputLabel value="Número" for="numeroEndereco" />
+				<p:inputText id="numeroEndereco" style="width: 50px"
+					value="#{cadastroEnderecoBean.endereco.numero}" />
+
+				<p:outputLabel value="Bairro" for="bairro" />
+				<p:inputText id="bairro" style="width: 150px"
+					value="#{cadastroEnderecoBean.endereco.bairro}" />
+
+				<p:outputLabel value="Complemento" for="complemento" />
+				<p:inputText id="complemento" style="width: 150px"
+					value="#{cadastroEnderecoBean.endereco.complemento}" />
+
+				<p:outputLabel value="CEP" for="cep" />
+				<p:inputMask id="cep" style="width: 80px" mask="99999999"
+					value="#{cadastroEnderecoBean.endereco.cep}" />
+
+				<p:outputLabel value="Cidade" for="cidade" />
+				<h:panelGroup>
+					<p:inputText id="cidade" style="width: 100px"
+						value="#{cadastroEnderecoBean.endereco.cidade}" />
+					<p:spacer />
+
+					<p:outputLabel value="UF" for="uf" />
+					<p:inputText id="uf" style="width: 40px"
+						value="#{cadastroEnderecoBean.endereco.uf}" />
+				</h:panelGroup>
+			</h:panelGrid>
+
+			<p:commandButton value="Incluir"
+				action="#{cadastroEnderecoBean.adicionar()}" id="incluir"
+				update=":frm:enderecosTable :frm:inclusaoPanel"
+				process="@this :frm:inclusaoPanel"
+				oncomplete="tratarInclusaoEndereco(args)" />
+
+		</h:panelGroup>
+	</p:dialog>
+
+	<p:confirmDialog header="Exclusão de endereço do cliente"
+		message="Tem certeza que deseja excluir este endereço #{cadastroEnderecoBean.enderecoAExcluir.logradouro} do cliente?"
+		widgetVar="confirmacaoExclusaoEndereco"
+		id="confirmacaoExclusaoEnderecoDialog">
+		<p:button value="Não"
+			onclick="PF('confirmacaoExclusaoEndereco').hide(); return false;" />
+		<p:commandButton value="Sim"
+			oncomplete="PF('confirmacaoExclusaoEndereco').hide();"
+			action="#{cadastroEnderecoBean.excluir()}" process="@this"
+			update=":frm:enderecosTable" />
+	</p:confirmDialog>
+
+
+	<p:dialog header="Edição de endereço" widgetVar="edicaoEnderecoDialog"
+		modal="true" resizable="false">
+		<h:panelGroup id="edicaoEnderecoPanel">
+
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Logradouro" for="logradouroEdicao" />
+				<p:inputText id="logradouroEdicao" size="100" maxlength="150"
+					value="#{cadastroEnderecoBean.enderecoAEditar.logradouro}" />
+
+				<p:outputLabel value="Número" for="numeroEdicao" />
+				<p:inputText id="numeroEdicao" size="30" maxlength="20"
+					value="#{cadastroEnderecoBean.enderecoAEditar.numero}" />
+
+				<p:outputLabel value="Bairro" for="bairroEdicao" />
+				<p:inputText id="bairroEdicao" size="100" maxlength="150"
+					value="#{cadastroEnderecoBean.enderecoAEditar.bairro}" />
+					
+				<p:outputLabel value="Complemento" for="complementoEdicao" />
+				<p:inputText id="complementoEdicao" size="100" maxlength="150"
+					value="#{cadastroEnderecoBean.enderecoAEditar.complemento}" />
+
+				<p:outputLabel value="CEP" for="cepEdicao" />
+				<p:inputText id="cepEdicao" size="30" maxlength="9"
+					value="#{cadastroEnderecoBean.enderecoAEditar.cep}" />
+
+				<p:outputLabel value="Cidade" for="cidadeEdicao" />
+				<p:inputText id="cidadeEdicao" size="80" maxlength="60"
+					value="#{cadastroEnderecoBean.enderecoAEditar.cidade}" />
+
+				<p:outputLabel value="UF" for="ufEdicao" />
+				<p:inputText id="ufEdicao" size="80" maxlength="60"
+					value="#{cadastroEnderecoBean.enderecoAEditar.uf}" />
+			</h:panelGrid>
+
+			<p:commandButton value="Salvar"
+				process="@this :frm:edicaoEnderecoPanel"
+				update=":frm:enderecosTable :frm:edicaoEnderecoPanel"
+				action="#{cadastroEnderecoBean.alterar()}"
+				oncomplete="PF('edicaoEnderecoDialog').hide()" />
+		</h:panelGroup>
+	</p:dialog>
+
+</ui:composition>

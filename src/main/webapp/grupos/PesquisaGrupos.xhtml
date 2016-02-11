@@ -1,0 +1,89 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa grupos</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmPesquisa">
+			<p:focus context="frmPesquisa" />
+			<h1>Pesquisa grupos</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar"
+						action="#{pesquisaGruposBean.pesquisar}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/grupos/CadastroGrupo" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px; border-color: white;"
+				columnClasses="rotulo, campo ">
+
+
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" size="40" maxlength="40"
+					value="#{pesquisaGruposBean.filtro.nome}" />
+
+				<p:outputLabel value="Descricao" for="descricao" />
+				<p:inputText id="descricao" size="70" maxlength="80"
+					value="#{pesquisaGruposBean.filtro.descricao}" />
+
+			</p:panelGrid>
+
+			<p:dataTable id="gruposTable"
+				value="#{pesquisaGruposBean.gruposFiltrados}" var="grupo"
+				style="margin-top: 20px" emptyMessage="Nenhum pedido encontrado"
+				rows="10" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom">
+
+				<p:column headerText="Nome" style="text-align: left">
+					<h:outputText value="#{grupo.nome}" />
+				</p:column>
+
+				<p:column headerText="Descrição"
+					style="text-align: left; width: 400px">
+					<h:outputText value="#{grupo.descricao}" />
+				</p:column>
+
+				<p:column style="text-align: center; width: 70px">
+					<p:button icon="ui-icon-pencil" title="Editar"
+						outcome="/grupos/CadastroGrupo">
+						<f:param name="grupo" value="#{grupo.id}" />
+					</p:button>
+					
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":frmPesquisa:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener
+							target="#{pesquisaGruposBean.grupoSelecionado}"
+							value="#{grupo}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog header="Exclusão de grupo"
+				message="Tem certeza que deseja excluir o grupo #{pesquisaGruposBean.grupoSelecionado.nome}?"
+				widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog">
+				<p:button value="Não"
+					ondblclick="PF('confirmacaoExclusao').hide(); return false;" />
+				<p:commandButton value="Sim"
+					oncomplete="PF('confirmacaoExclusao').hide(); return false;"
+					action="#{pesquisaGruposBean.excluir}" process="@this"
+					update=":frmPesquisa:gruposTable" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+
+
+</ui:composition>

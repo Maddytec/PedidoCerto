@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid id="painel" columns="2"
+		style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+		<p:outputLabel value="Nome" for="nome" />
+		<p:inputText id="nome" size="90"
+			value="#{cadastroClienteBean.cliente.nome}" />
+
+		<p:outputLabel for="tipo" value="Tipo" />
+		<p:selectOneRadio id="tipo"
+			value="#{cadastroClienteBean.cliente.tipo}">
+
+			<f:selectItems value="#{cadastroClienteBean.tipoPessoa}"
+				var="tipoPessoa" itemValue="#{tipoPessoa}"
+				itemLabel="#{tipoPessoa.descricao}" />
+			<p:ajax
+				update="frm:label-documentoReceitaFederal frm:documentoReceitaFederal" />
+		</p:selectOneRadio>
+
+		<p:outputLabel id="label-documentoReceitaFederal"
+			value="#{cadastroClienteBean.cliente.tipo == 'FISICA' ? 'Fisíca' : 'Jurídica'}"
+			for="documentoReceitaFederal" />
+		<p:inputMask
+			mask="#{cadastroClienteBean.cliente.tipo == 'FISICA' ? 99999999999 : 99999999999999}"
+			id="documentoReceitaFederal" size="20" maxlength="14"
+			value="#{cadastroClienteBean.cliente.documentoReceitaFederal}" />
+
+		<p:outputLabel value="Fone móvel" for="foneMovel" />
+		<p:inputMask mask="(99) 99999-9999" id="foneMovel" size="15"
+			value="#{cadastroClienteBean.cliente.foneMovel}" />
+
+		<p:outputLabel value="Fone fixo" for="foneFixo" />
+		<p:inputMask mask="(99) 9999-9999" id="foneFixo" size="15"
+			value="#{cadastroClienteBean.cliente.foneFixo}" />
+
+		<p:outputLabel value="E-mail" for="email" />
+		<p:inputText id="email" size="50"
+			value="#{cadastroClienteBean.cliente.email}" />
+
+	</p:panelGrid>
+
+</ui:composition>
