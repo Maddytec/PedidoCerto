@@ -10,31 +10,31 @@ import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
 
-import br.com.maddytec.pedidovenda.model.Cliente;
-import br.com.maddytec.pedidovenda.repository.Clientes;
+import br.com.maddytec.pedidovenda.model.Fornecedor;
+import br.com.maddytec.pedidovenda.repository.Fornecedores;
 
 
 
 @Named
 @ViewScoped
-public class SelecaoClienteBean implements Serializable {
+public class SelecaoFornecedorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private Clientes clientes;
+	private Fornecedores fornecedores;
 	
 	private String nome;
 	
-	private List<Cliente> clientesFiltrados;
+	private List<Fornecedor> fornecedoresFiltrados;
 	
 	public void pesquisar() {
-		clientesFiltrados = clientes.porNome(nome);
+		fornecedoresFiltrados = fornecedores.porNome(nome);
 	}
 
 	
-	public void selecionar(Cliente cliente){
-		RequestContext.getCurrentInstance().closeDialog(cliente);
+	public void selecionar(Fornecedor fornecedor){
+		RequestContext.getCurrentInstance().closeDialog(fornecedor);
 	}
 	
 	
@@ -44,7 +44,7 @@ public class SelecaoClienteBean implements Serializable {
 		opcoes.put("resizable", false);
 		opcoes.put("contentHeight", 470);
 		
-		RequestContext.getCurrentInstance().openDialog("/dialogos/SelecaoCliente", opcoes, null);
+		RequestContext.getCurrentInstance().openDialog("/dialogos/SelecaoFornecedor", opcoes, null);
 	}
 	
 	public String getNome() {
@@ -55,8 +55,8 @@ public class SelecaoClienteBean implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Cliente> getClientesFiltrados() {
-		return clientesFiltrados;
+	public List<Fornecedor> getFornecedoresFiltrados() {
+		return fornecedoresFiltrados;
 	}
 
 }

@@ -19,14 +19,14 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.hibernate.validator.constraints.NotBlank;
 import org.primefaces.event.SelectEvent;
 
-import br.com.maddytec.pedidovenda.model.Cliente;
+import br.com.maddytec.pedidovenda.model.Fornecedor;
 import br.com.maddytec.pedidovenda.model.EnderecoEntrega;
 import br.com.maddytec.pedidovenda.model.FormaPagamento;
 import br.com.maddytec.pedidovenda.model.ItemPedido;
 import br.com.maddytec.pedidovenda.model.Pedido;
 import br.com.maddytec.pedidovenda.model.Produto;
 import br.com.maddytec.pedidovenda.model.Usuario;
-import br.com.maddytec.pedidovenda.repository.Clientes;
+import br.com.maddytec.pedidovenda.repository.Fornecedores;
 import br.com.maddytec.pedidovenda.repository.Produtos;
 import br.com.maddytec.pedidovenda.repository.Usuarios;
 import br.com.maddytec.pedidovenda.service.CadastroPedidoService;
@@ -43,7 +43,7 @@ public class CadastroPedidoBean implements Serializable {
 	private Usuarios usuarios;
 
 	@Inject
-	private Clientes clientes;
+	private Fornecedores fornecedores;
 
 	@Inject
 	private Produtos produtos;
@@ -69,8 +69,8 @@ public class CadastroPedidoBean implements Serializable {
 		limpar();
 	}
 
-	public void clienteSelecionado(SelectEvent event) {
-		pedido.setCliente((Cliente) event.getObject());
+	public void fornecedorSelecionado(SelectEvent event) {
+		pedido.setFornecedor((Fornecedor) event.getObject());
 	}
 
 	private void limpar() {
@@ -177,8 +177,8 @@ public class CadastroPedidoBean implements Serializable {
 		return FormaPagamento.values();
 	}
 
-	public List<Cliente> completarCliente(String nome) {
-		return this.clientes.porNome(nome);
+	public List<Fornecedor> completarFornecedor(String nome) {
+		return this.fornecedores.porNome(nome);
 	}
 
 	public void isEditando() {
@@ -247,12 +247,12 @@ public class CadastroPedidoBean implements Serializable {
 	}
 
 	@NotBlank
-	public String getNomeCliente() {
-		return pedido.getCliente() == null ? null : pedido.getCliente()
+	public String getNomeFornecedor() {
+		return pedido.getFornecedor() == null ? null : pedido.getFornecedor()
 				.getNome();
 	}
 	
-	public void setNomeCliente(String nomeCliente){
+	public void setNomeFornecedor(String nomeFornecedor){
 	//corrige erro do readonly	
 	}
 	

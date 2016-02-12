@@ -8,7 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.maddytec.pedidovenda.model.Cliente;
+import br.com.maddytec.pedidovenda.model.Fornecedor;
 import br.com.maddytec.pedidovenda.model.Endereco;
 import br.com.maddytec.pedidovenda.util.jsf.FacesUtil;
 
@@ -23,8 +23,8 @@ public class CadastroEnderecoBean implements Serializable {
 	private Endereco enderecoAExcluir;
 
 	@Inject
-	@ClienteEdicao
-	private Cliente cliente;
+	@FornecedorEdicao
+	private Fornecedor fornecedor;
 
 	public CadastroEnderecoBean() {
 		this.endereco = new Endereco();
@@ -33,26 +33,26 @@ public class CadastroEnderecoBean implements Serializable {
 	}
 
 	@Inject
-	private Event<ClienteAlteradoEvent> clienteAlteradoEvent;
+	private Event<FornecedorAlteradoEvent> fornecedorAlteradoEvent;
 
 	public void adicionar() {
 		 if (endereco != null) {
-		 this.cliente.getEnderecos().add(endereco);
-		 this.endereco.setCliente(cliente);
+		 this.fornecedor.getEnderecos().add(endereco);
+		 this.endereco.setFornecedor(fornecedor);
 		
 		 endereco = new Endereco();
-		 this.clienteAlteradoEvent.fire(new ClienteAlteradoEvent(cliente));
+		 this.fornecedorAlteradoEvent.fire(new FornecedorAlteradoEvent(fornecedor));
 		}
 	}
 	
 
 	public void excluir() {
 		if (enderecoAExcluir != null) {
-			this.cliente.getEnderecos().remove(this.enderecoAExcluir);
+			this.fornecedor.getEnderecos().remove(this.enderecoAExcluir);
 
-			this.clienteAlteradoEvent.fire(new ClienteAlteradoEvent(cliente));
+			this.fornecedorAlteradoEvent.fire(new FornecedorAlteradoEvent(fornecedor));
 
-			FacesUtil.addInfoMessage("Endereço do cliente "
+			FacesUtil.addInfoMessage("Endereço do fornecedor "
 					+ enderecoAExcluir.getLogradouro()
 					+ " excluído com sucesso.");
 
@@ -62,9 +62,9 @@ public class CadastroEnderecoBean implements Serializable {
 
 	public void alterar() {
 		if (enderecoAEditar != null) {
-			this.clienteAlteradoEvent.fire(new ClienteAlteradoEvent(cliente));
+			this.fornecedorAlteradoEvent.fire(new FornecedorAlteradoEvent(fornecedor));
 
-			FacesUtil.addInfoMessage("Endereço do cliente "
+			FacesUtil.addInfoMessage("Endereço do fornecedor "
 					+ enderecoAEditar.getLogradouro()
 					+ " alterado com sucesso.");
 
@@ -76,12 +76,12 @@ public class CadastroEnderecoBean implements Serializable {
 		return endereco;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Fornecedor getFornecedor() {
+		return fornecedor;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 	public void setEndereco(Endereco endereco) {
@@ -89,7 +89,7 @@ public class CadastroEnderecoBean implements Serializable {
 	}
 
 	public List<Endereco> getEnderecosIncluidos() {
-		return this.cliente.getEnderecos();
+		return this.fornecedor.getEnderecos();
 	}
 
 	public Endereco getEnderecoAEditar() {

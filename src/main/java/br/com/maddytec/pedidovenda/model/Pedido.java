@@ -40,7 +40,7 @@ public class Pedido implements Serializable {
 	private StatusPedido status = StatusPedido.ORCAMENTO;
 	private FormaPagamento formaPagamento;
 	private Usuario vendedor;
-	private Cliente cliente;
+	private Fornecedor fornecedor;
 	private EnderecoEntrega enderecoEntrega;
 	private List<ItemPedido> itens = new ArrayList<>();
 
@@ -151,12 +151,12 @@ public class Pedido implements Serializable {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false)
-	public Cliente getCliente() {
-		return cliente;
+	public Fornecedor getFornecedor() {
+		return fornecedor;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 	@Embedded

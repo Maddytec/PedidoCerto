@@ -14,46 +14,46 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import br.com.maddytec.pedidovenda.model.Cliente;
-import br.com.maddytec.pedidovenda.repository.filter.ClienteFilter;
+import br.com.maddytec.pedidovenda.model.Fornecedor;
+import br.com.maddytec.pedidovenda.repository.filter.FornecedorFilter;
 import br.com.maddytec.pedidovenda.util.jpa.Transactional;
 
-public class Clientes implements Serializable {
+public class Fornecedores implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private EntityManager manager;
 
-	public Cliente porId(Long id) {
-		return this.manager.find(Cliente.class, id);
+	public Fornecedor porId(Long id) {
+		return this.manager.find(Fornecedor.class, id);
 	}
 
-	public List<Cliente> porNome(String nome){
+	public List<Fornecedor> porNome(String nome){
 		
-		return this.manager.createQuery("from Cliente where upper(nome) like :nome", Cliente.class)
+		return this.manager.createQuery("from Fornecedor where upper(nome) like :nome", Fornecedor.class)
 				.setParameter("nome", nome.toUpperCase() + "%")
 				.getResultList();
 	}
 
 	
-	public Cliente guardar(Cliente cliente) {
-		return manager.merge(cliente);
+	public Fornecedor guardar(Fornecedor fornecedor) {
+		return manager.merge(fornecedor);
 	}
 
 	@Transactional
-	public void remover(Cliente cliente) {
-		cliente = porId(cliente.getId());
-		manager.remove(cliente);
+	public void remover(Fornecedor fornecedor) {
+		fornecedor = porId(fornecedor.getId());
+		manager.remove(fornecedor);
 		manager.flush();
 	}
 
-	public Cliente porDocumentoReceitaFederal(String documentoReceitaFederal) {
+	public Fornecedor porDocumentoReceitaFederal(String documentoReceitaFederal) {
 		try {
 			return manager
 					.createQuery(
-							"from Cliente where upper(documentoReceitaFederal) = :documentoReceitaFederal",
-							Cliente.class)
+							"from Fornecedor where upper(documentoReceitaFederal) = :documentoReceitaFederal",
+							Fornecedor.class)
 					.setParameter("documentoReceitaFederal",
 							documentoReceitaFederal.toUpperCase())
 					.getSingleResult();
@@ -62,11 +62,11 @@ public class Clientes implements Serializable {
 		}
 	}
 
-	public Cliente porEmail(String email) {
+	public Fornecedor porEmail(String email) {
 		try {
 			return manager
-					.createQuery("from Cliente where upper(email) = :email",
-							Cliente.class)
+					.createQuery("from Fornecedor where upper(email) = :email",
+							Fornecedor.class)
 					.setParameter("email", email.toUpperCase())
 					.getSingleResult();
 		} catch (NoResultException e) {
@@ -75,10 +75,10 @@ public class Clientes implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Cliente> filtrados(ClienteFilter filtro) {
+	public List<Fornecedor> filtrados(FornecedorFilter filtro) {
 
 		Session session = manager.unwrap(Session.class);
-		Criteria criteria = session.createCriteria(Cliente.class);
+		Criteria criteria = session.createCriteria(Fornecedor.class);
 
 		// MatchMode.ANYWHERE determina o like '%%'
 		if (StringUtils.isNotBlank(filtro.getNome())) {

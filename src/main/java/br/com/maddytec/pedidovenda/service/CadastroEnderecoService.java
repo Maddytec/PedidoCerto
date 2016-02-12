@@ -18,6 +18,7 @@ public class CadastroEnderecoService implements Serializable {
 
 	@Transactional
 	public Endereco salvar(Endereco endereco) {
+		
 		Endereco enderecoExistente = enderecos.porId(endereco.getId());
 
 		if (enderecoExistente != null && !enderecoExistente.equals(endereco)) {

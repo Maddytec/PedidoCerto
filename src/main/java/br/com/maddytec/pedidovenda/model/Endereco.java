@@ -29,7 +29,7 @@ public class Endereco implements Serializable {
 	private String cidade;
 	private String uf;
 	private String cep;
-	private Cliente cliente;
+	private Fornecedor fornecedor;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -113,13 +113,13 @@ public class Endereco implements Serializable {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "cliente_id", nullable = false)
-	public Cliente getCliente() {
-		return cliente;
+	@JoinColumn(name = "fornecedor_id", nullable = false)
+	public Fornecedor getFornecedor() {
+		return fornecedor;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 	@Override

@@ -20,8 +20,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "cliente")
-public class Cliente implements Serializable {
+@Table(name = "fornecedor")
+public class Fornecedor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -88,7 +88,7 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
@@ -135,7 +135,7 @@ public class Cliente implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		Fornecedor other = (Fornecedor) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

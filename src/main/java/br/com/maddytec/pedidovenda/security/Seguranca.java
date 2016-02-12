@@ -45,14 +45,14 @@ public class Seguranca {
 				|| externalContext.isUserInRole("VENDEDORES");
 	}
 		
-	public boolean isPermitidoSalvarCliente(){
+	public boolean isPermitidoSalvarFornecedor(){
 		return externalContext.isUserInRole("ADMINISTRADORES") 
-				|| externalContext.isUserInRole("VENDEDORES");
+				|| externalContext.isUserInRole("COMPRADORES");
 	}
 	
-	public boolean isPermitidoExcluirCliente(){
+	public boolean isPermitidoExcluirFornecedor(){
 		return externalContext.isUserInRole("ADMINISTRADORES") 
-				|| externalContext.isUserInRole("VENDEDORES");
+				|| externalContext.isUserInRole("COMPRADORES");
 	}
 	
 	@Produces

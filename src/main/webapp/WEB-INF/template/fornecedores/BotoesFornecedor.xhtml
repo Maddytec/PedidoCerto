@@ -7,16 +7,16 @@
 
 	<p:toolbar style="margin-top: 20px">
 		<p:toolbarGroup>
-			<p:button value="Novo" outcome="/clientes/CadastroCliente" />
+			<p:button value="Novo" outcome="/fornecedores/CadastroFornecedor" />
 			<p:commandButton value="Salvar" id="botaoSalvar"
-				action="#{cadastroClienteBean.salvar}"
-				process="@this :frm:painel :frm:confirmacaoExclusaoEnderecoDialog"
-				disabled="#{not seguranca.permitidoSalvarCliente}"
+				action="#{cadastroFornecedorBean.salvar}"
+				process="@this :frm:painel"
+				disabled="#{not seguranca.permitidoSalvarFornecedor}"
 				validateClient="true" />
 		</p:toolbarGroup>
 
 		<p:toolbarGroup align="right">
-			<p:button value="Pesquisar" outcome="/clientes/PesquisaClientes" />
+			<p:button value="Pesquisar" outcome="/fornecedores/PesquisaFornecedores" />
 		</p:toolbarGroup>
 
 	</p:toolbar>

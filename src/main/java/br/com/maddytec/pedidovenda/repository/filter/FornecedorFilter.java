@@ -2,7 +2,7 @@ package br.com.maddytec.pedidovenda.repository.filter;
 
 import java.io.Serializable;
 
-public class ClienteFilter implements Serializable {
+public class FornecedorFilter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

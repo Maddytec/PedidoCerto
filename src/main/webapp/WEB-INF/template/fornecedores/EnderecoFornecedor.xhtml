@@ -21,7 +21,7 @@ function tratarInclusaoEndereco(args){
 
 	<p:dataTable id="enderecosTable" style="margin-top: 20px"
 		value="#{cadastroEnderecoBean.enderecosIncluidos}" var="endereco"
-		emptyMessage="Nenhum pedido encontrado" rows="10" paginator="true"
+		emptyMessage="Nenhum endereço encontrado" rows="10" paginator="true"
 		paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
 		<p:column headerText="Logradouro" style="text-align: left">
@@ -124,8 +124,8 @@ function tratarInclusaoEndereco(args){
 		</h:panelGroup>
 	</p:dialog>
 
-	<p:confirmDialog header="Exclusão de endereço do cliente"
-		message="Tem certeza que deseja excluir este endereço #{cadastroEnderecoBean.enderecoAExcluir.logradouro} do cliente?"
+	<p:confirmDialog header="Exclusão de endereço do fornecedor"
+		message="Tem certeza que deseja excluir este endereço #{cadastroEnderecoBean.enderecoAExcluir.logradouro} do fornecedor?"
 		widgetVar="confirmacaoExclusaoEndereco"
 		id="confirmacaoExclusaoEnderecoDialog">
 		<p:button value="Não"

@@ -8,23 +8,23 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.com.maddytec.pedidovenda.model.Cliente;
-import br.com.maddytec.pedidovenda.repository.Clientes;
+import br.com.maddytec.pedidovenda.model.Fornecedor;
+import br.com.maddytec.pedidovenda.repository.Fornecedores;
 
-@FacesConverter(forClass = Cliente.class)
-public class ClienteConverter implements Converter {
+@FacesConverter(forClass = Fornecedor.class)
+public class FornecedorConverter implements Converter {
 
 	@Inject
-	private Clientes clientes;
+	private Fornecedores fornecedores;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent componet,
 			String value) {
-		Cliente retorno = null;
+		Fornecedor retorno = null;
 
 		if (StringUtils.isNotEmpty(value)) {
 			Long id = new Long(value);
-			return retorno = clientes.porId(id);
+			return retorno = fornecedores.porId(id);
 		}
 		return retorno;
 	}
@@ -33,8 +33,8 @@ public class ClienteConverter implements Converter {
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) {
 		if (value != null) {
-			Cliente cliente = (Cliente) value;
-			return cliente.getId() == null ? null : cliente.getId().toString();
+			Fornecedor fornecedor = (Fornecedor) value;
+			return fornecedor.getId() == null ? null : fornecedor.getId().toString();
 		}
 
 		return "";
