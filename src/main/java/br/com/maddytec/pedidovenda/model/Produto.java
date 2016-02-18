@@ -11,15 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
-
-import br.com.maddytec.pedidovenda.service.NegocioException;
-import br.com.maddytec.pedidovenda.validation.SKU;
 
 @Entity
 @Table(name = "produto")
@@ -30,9 +25,10 @@ public class Produto implements Serializable {
 	private Long id;
 	private String nome;
 	private String sku;
+	private String unidadeDeMedida;
 	private BigDecimal valorUnitario;
-	private Integer quantidadeEstoque;
 	private Categoria categoria;
+	private boolean status = true;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,15 +51,24 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	@NotBlank
-	@SKU
-	@Column(nullable = false, length = 20, unique = true)
+	@Column(nullable = true, length = 20, unique = true)
 	public String getSku() {
 		return sku;
 	}
 
 	public void setSku(String sku) {
 		this.sku = sku == null ? null : sku.toUpperCase();
+	}
+
+	@NotBlank
+	@Size(max = 15)
+	@Column(nullable = false, length = 15)
+	public String getUnidadeDeMedida() {
+		return unidadeDeMedida;
+	}
+
+	public void setUnidadeDeMedida(String unidadeDeMedida) {
+		this.unidadeDeMedida = unidadeDeMedida;
 	}
 
 	@NotNull
@@ -77,18 +82,6 @@ public class Produto implements Serializable {
 	}
 
 	@NotNull
-	@Min(value = 0, message = "não pode ser menor que 0")
-	@Max(value = 9999, message = "não pode ser maior ou igual a 9999")
-	@Column(name = "quantidade_estoque", nullable = false, length = 4)
-	public Integer getQuantidadeEstoque() {
-		return quantidadeEstoque;
-	}
-
-	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-		this.quantidadeEstoque = quantidadeEstoque;
-	}
-
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
 	public Categoria getCategoria() {
@@ -97,6 +90,16 @@ public class Produto implements Serializable {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	@NotNull
+	@Column(name = "status", nullable = false)
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	@Override
@@ -122,21 +125,6 @@ public class Produto implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	public void baixarEstoque(Integer quantidade) {
-		int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
-
-		if (novaQuantidade < 0) {
-			throw new NegocioException("Não há disponibilidade no estoque de "
-					+ quantidade + " itens do produto " + this.getSku() + ".");
-		}
-
-		this.setQuantidadeEstoque(novaQuantidade);
-	}
-
-	public void adicionarEstoque(Integer quantidade) {
-		this.setQuantidadeEstoque(getQuantidadeEstoque() + quantidade);
 	}
 
 }

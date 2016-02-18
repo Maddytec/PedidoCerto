@@ -2,8 +2,6 @@ package br.com.maddytec.pedidovenda.repository.filter;
 
 import java.io.Serializable;
 
-import br.com.maddytec.pedidovenda.validation.SKU;
-
 public class ProdutoFilter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +9,6 @@ public class ProdutoFilter implements Serializable {
 	private String sku;
 	private String nome;
 
-	@SKU
 	public String getSku() {
 		return sku;
 	}

@@ -52,6 +52,11 @@
 				style="margin-top: 20px" emptyMessage="Nenhum produto encontrado."
 				rows="20" paginator="true" paginatorAlwaysVisible="false"
 				paginatorPosition="bottom">
+				
+				<p:column headerText="Código" style="text-align: center; width: 100px">
+					<h:outputText value="#{produto.id}" />
+				</p:column>				
+				
 				<p:column headerText="SKU" style="text-align: center; width: 100px">
 					<h:outputText value="#{produto.sku}" />
 				</p:column>
@@ -65,6 +70,12 @@
 						value="#{produto.categoria.categoriaPai.descricao} - #{produto.categoria.descricao}" />
 				</p:column>
 
+				<p:column headerText="Unidade"
+					style="text-align: right; width: 70px">
+					<h:outputText value="#{produto.unidadeDeMedida}">
+					</h:outputText>
+				</p:column>
+
 				<p:column headerText="Valor unitário"
 					style="text-align: right; width: 120px">
 					<h:outputText value="#{produto.valorUnitario}">
@@ -72,10 +83,15 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Estoque"
-					style="text-align: center; width: 100px">
-					<h:outputText value="#{produto.quantidadeEstoque}" />
+
+				<p:column headerText="Status ativo"
+					style="text-align: right; width: 70px">
+					<h:outputText value="#{produto.status ? 'Sim' : 'Não'}">
+					</h:outputText>
 				</p:column>
+
+
+
 
 				<p:column style="width: 100px; text-align: center"
 					exportable="false">
