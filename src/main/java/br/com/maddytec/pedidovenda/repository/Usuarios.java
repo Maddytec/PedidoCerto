@@ -29,8 +29,8 @@ public class Usuarios implements Serializable {
 		return manager.find(Usuario.class, id);
 	}
 
-	public List<Usuario> vendedores() {
-		// TODO filtrar apenas vendedores (por um grupo específico)
+	public List<Usuario> solicitantes() {
+		// TODO filtrar apenas solicitantes (por um grupo específico)
 		return manager.createQuery("from Usuario", Usuario.class)
 				.getResultList();
 	}

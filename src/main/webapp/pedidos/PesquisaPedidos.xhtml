@@ -1,0 +1,131 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa pedidos</ui:define>
+
+	<ui:define name="corpo">
+		<h:form id="frm">
+			<p:focus context="frm" />
+			<h1>Pesquisa pedidos</h1>
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:commandButton ajax="false" icon="xlsx">
+						<p:dataExporter type="xls" target="pedidosTable"
+							fileName="Pedidos"
+							postProcessor="#{pesquisaPedidosBean.posProcessarXls}">
+						</p:dataExporter>
+					</p:commandButton>
+					<p:button value="Novo" outcome="/pedidos/CadastroPedido" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px; border-color: white;"
+				columnClasses="rotulo, campo ">
+				<p:outputLabel value="Número" />
+				<h:panelGroup>
+					<p:inputText size="10"
+						value="#{pesquisaPedidosBean.filtro.numeroDe}" />
+					a
+					<p:inputText size="10"
+						value="#{pesquisaPedidosBean.filtro.numeroAte}" />
+				</h:panelGroup>
+				<p:outputLabel value="Data de criação" />
+				<h:panelGroup>
+					<p:calendar size="10"
+						value="#{pesquisaPedidosBean.filtro.dataCriacaoDe}"
+						pattern="dd/MM/yyyy" locale="pt_BR" />
+					a
+					<p:calendar size="10"
+						value="#{pesquisaPedidosBean.filtro.dataCriacaoAte}"
+						pattern="dd/MM/yyyy" locale="pt_BR" />
+				</h:panelGroup>
+
+				<p:outputLabel value="Vendedor" />
+				<p:inputText value="#{pesquisaPedidosBean.filtro.nomeVendedor}"
+					size="40" />
+
+				<p:outputLabel value="Cliente" />
+				<p:inputText value="#{pesquisaPedidosBean.filtro.nomeCliente}"
+					size="40" />
+
+				<p:outputLabel value="Status" />
+				<p:selectManyCheckbox value="#{pesquisaPedidosBean.filtro.statuses}">
+					<f:selectItems value="#{pesquisaPedidosBean.statuses}" var="status"
+						itemValue="#{status}" itemLabel="#{status.descricao}" />
+				</p:selectManyCheckbox>
+
+			</p:panelGrid>
+
+			<p:dataTable id="pedidosTable" value="#{pesquisaPedidosBean.model}"
+				var="pedido" style="margin-top: 20px"
+				emptyMessage="Nenhum pedido encontrado" rows="10" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom"
+				lazy="true">
+				<p:column headerText="Número"
+					style="text-align: center; width: 70px" sortBy="#{pedido.id}">
+					<h:outputText value="#{pedido.id}" />
+				</p:column>
+				<p:column headerText="Cliente" sortBy="#{pedido.cliente.nome}">
+					<h:outputText value="#{pedido.cliente.nome}" />
+				</p:column>
+
+				<p:column headerText="Vendedor" sortBy="#{pedido.vendedor}">
+					<h:outputText value="#{pedido.vendedor.nome}" />
+				</p:column>
+				<p:column headerText="Data de criação"
+					style="text-align: center; width: 120px;"
+					sortBy="#{pedido.dataCriacao}">
+					<h:outputText value="#{pedido.dataCriacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Data de entrega"
+					style="text-align: center; width: 120px;"
+					sortBy="#{pedido.dataEntrega}">
+					<h:outputText value="#{pedido.dataEntrega}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Valor total"
+					style="text-align: right; width: 90px"
+					sortBy="#{pedido.valorTotal}">
+					<h:outputText value="#{pedido.valorTotal}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Status" style="width: 70px" sortBy="#{pedido.status}">
+					<h:outputText value="#{pedido.status.descricao}" />
+				</p:column>
+
+				<p:column style="text-align: center; width: 80px" exportable="false">
+					<p:button icon="ui-icon-pencil" title="Editar"
+						outcome="/pedidos/CadastroPedido"
+						disabled="#{not seguranca.baixarPedidoPermitido or pedido.status != 'ORCAMENTO'}">
+						<f:param name="pedido" value="#{pedido.id}" />
+						<f:event listener="#{cadastroPedidoBean.isEditando}"
+							type="preRenderView" />
+					</p:button>
+
+					<p:button icon="ui-icon-circle-arrow-s" title="Baixar"
+						outcome="/pedidos/CadastroPedido"
+						disabled="#{not seguranca.baixarPedidoPermitido or pedido.status != 'EMITIDO'}">
+						<f:param name="pedido" value="#{pedido.id}" />
+						<f:event listener="#{cadastroPedidoBean.isBaixando}"
+							type="preRenderView" />
+					</p:button>
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
