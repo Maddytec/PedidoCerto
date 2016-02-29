@@ -67,7 +67,7 @@ public class Pedidos implements Serializable {
 				Restrictions.ge("dataCriacao", dataInicial.getTime()));
 
 		if (criadoPor != null) {
-			criteria.add(Restrictions.eq("vendedor", criadoPor));
+			criteria.add(Restrictions.eq("solicitante", criadoPor));
 		}
 
 		List<DataValor> valoresPorData = criteria.setResultTransformer(
@@ -97,8 +97,8 @@ public class Pedidos implements Serializable {
 	private Criteria criarCriteriaParaFiltro(PedidoFilter filtro) {
 		Session session = manager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Pedido.class)
-				.createAlias("cliente", "cliente")
-				.createAlias("vendedor", "v");
+				.createAlias("fornecedor", "f")
+				.createAlias("solicitante", "s");
 
 		if (filtro.getNumeroDe() != null) {
 			// id deve ser maior ou igual (ge = greater or equal ) a
@@ -128,15 +128,15 @@ public class Pedidos implements Serializable {
 			criteria.add(Restrictions.le("dataCriacao", calendar.getTime()));
 		}
 
-		if (StringUtils.isNotBlank(filtro.getNomeCliente())) {
-			// acessamos o nome do cliente associado ao pedido pelo alias "c"
-			criteria.add(Restrictions.ilike("c.nome", filtro.getNomeCliente(),
+		if (StringUtils.isNotBlank(filtro.getNomeFornecedor())) {
+			// acessamos o nome do fornecedor associado ao pedido pelo alias "f"
+			criteria.add(Restrictions.ilike("f.nome", filtro.getNomeFornecedor(),
 					MatchMode.ANYWHERE));
 		}
 
-		if (StringUtils.isNotBlank(filtro.getNomeVendedor())) {
-			// acessamos o nome do vendedor associado ao pedido pelo alias "v"
-			criteria.add(Restrictions.ilike("v.nome", filtro.getNomeVendedor(),
+		if (StringUtils.isNotBlank(filtro.getNomeSolicitante())) {
+			// acessamos o nome do solicitante associado ao pedido pelo alias "s"
+			criteria.add(Restrictions.ilike("s.nome", filtro.getNomeSolicitante(),
 					MatchMode.ANYWHERE));
 		}
 

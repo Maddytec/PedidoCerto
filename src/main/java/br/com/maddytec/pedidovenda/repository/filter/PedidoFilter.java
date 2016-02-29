@@ -13,8 +13,8 @@ public class PedidoFilter implements Serializable {
 	private Long numeroAte;
 	private Date dataCriacaoDe;
 	private Date dataCriacaoAte;
-	private String nomeVendedor;
-	private String nomeCliente;
+	private String nomeSolicitante;
+	private String nomeFornecedor;
 	private StatusPedido[] statuses;
 
 	private int primeiroRegistro;
@@ -54,20 +54,20 @@ public class PedidoFilter implements Serializable {
 		this.dataCriacaoAte = dataCriacaoAte;
 	}
 
-	public String getNomeVendedor() {
-		return nomeVendedor;
+	public String getNomeSolicitante() {
+		return nomeSolicitante;
 	}
 
-	public void setNomeVendedor(String nomeVendedor) {
-		this.nomeVendedor = nomeVendedor;
+	public void setNomeSolicitante(String nomeSolicitante) {
+		this.nomeSolicitante = nomeSolicitante;
 	}
 
-	public String getNomeCliente() {
-		return nomeCliente;
+	public String getNomeFornecedor() {
+		return nomeFornecedor;
 	}
 
-	public void setNomeCliente(String nomeCliente) {
-		this.nomeCliente = nomeCliente;
+	public void setNomeFornecedor(String nomeFornecedor) {
+		this.nomeFornecedor = nomeFornecedor;
 	}
 
 	public StatusPedido[] getStatuses() {
