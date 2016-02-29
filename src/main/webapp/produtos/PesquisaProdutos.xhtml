@@ -76,14 +76,6 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Valor unitário"
-					style="text-align: right; width: 120px">
-					<h:outputText value="#{produto.valorUnitario}">
-						<f:convertNumber type="currency" />
-					</h:outputText>
-				</p:column>
-
-
 				<p:column headerText="Status ativo"
 					style="text-align: right; width: 70px">
 					<h:outputText value="#{produto.status ? 'Sim' : 'Não'}">

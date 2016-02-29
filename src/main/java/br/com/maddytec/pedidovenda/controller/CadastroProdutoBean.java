@@ -1,7 +1,6 @@
 package br.com.maddytec.pedidovenda.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -28,11 +27,10 @@ public class CadastroProdutoBean implements Serializable {
 	private CadastroProdutoService cadastroProdutoService;
 
 	private Produto produto;
-	private Categoria categoriaPai;
+	private Categoria categoria;
 
 	private List<Categoria> categoriasRaizes;
-	private List<Categoria> subcategorias;
-
+	
 	public CadastroProdutoBean() {
 		limpar();
 	}
@@ -45,19 +43,13 @@ public class CadastroProdutoBean implements Serializable {
 
 		categoriasRaizes = categorias.raizes();
 
-		if (this.categoriaPai != null) {
-			carregarSubcategorias();
-		}
+		
 	}
 
-	public void carregarSubcategorias() {
-		subcategorias = categorias.subcategoriasDe(categoriaPai);
-	}
-
+	
 	private void limpar() {
 		produto = new Produto();
-		categoriaPai = null;
-		subcategorias = new ArrayList<>();
+		categoria = null;
 	}
 
 	public void salvar() {
@@ -79,7 +71,7 @@ public class CadastroProdutoBean implements Serializable {
 		this.produto = produto;
 
 		if (produto != null) {
-			this.categoriaPai = this.produto.getCategoria().getCategoriaPai();
+			this.categoria = this.produto.getCategoria();
 		}
 	}
 
@@ -96,16 +88,14 @@ public class CadastroProdutoBean implements Serializable {
 	}
 
 	@NotNull
-	public Categoria getCategoriaPai() {
-		return categoriaPai;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setCategoriaPai(Categoria categoriaPai) {
-		this.categoriaPai = categoriaPai;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
-	public List<Categoria> getSubcategorias() {
-		return subcategorias;
-	}
+	
 
 }

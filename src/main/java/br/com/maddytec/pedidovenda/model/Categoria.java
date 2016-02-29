@@ -1,17 +1,11 @@
 package br.com.maddytec.pedidovenda.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -25,9 +19,8 @@ public class Categoria implements Serializable {
 
 	private Long id;
 	private String descricao;
-	private Categoria categoriaPai;
-	private List<Categoria> subcategorias = new ArrayList<>();
-
+	private Categoria categoria;
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -49,23 +42,8 @@ public class Categoria implements Serializable {
 		this.descricao = descricao;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "categoria_pai_id")
-	public Categoria getCategoriaPai() {
-		return categoriaPai;
-	}
-
-	public void setCategoriaPai(Categoria categoriaPai) {
-		this.categoriaPai = categoriaPai;
-	}
-
-	@OneToMany(mappedBy = "categoriaPai", cascade = CascadeType.ALL)
-	public List<Categoria> getSubcategorias() {
-		return subcategorias;
-	}
-
-	public void setSubcategorias(List<Categoria> subcategorias) {
-		this.subcategorias = subcategorias;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	@Override

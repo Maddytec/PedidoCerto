@@ -1,7 +1,6 @@
 package br.com.maddytec.pedidovenda.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -71,9 +70,6 @@ public class Produto implements Serializable {
 	}
 
 	
-	public void setValorUnitario(BigDecimal valorUnitario) {
-	}
-
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
