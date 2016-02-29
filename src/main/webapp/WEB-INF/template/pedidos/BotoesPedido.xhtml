@@ -12,14 +12,7 @@
 		</p:toolbarGroup>
 
 		<p:toolbarGroup align="right">
-			<p:commandButton value="Emitir"
-				action="#{emissaoPedidoBean.emitirPedido}" process="@form"
-				update="@form"
-				disabled="#{cadastroPedidoBean.pedido.naoEmissivel or not seguranca.emitirPedidoPermitido}" />
-			<p:commandButton value="Baixar"
-				action="#{baixaPedidoBean.baixarPedido()}" process="@this"
-				update="@form"
-				disabled="#{not cadastroPedidoBean.pedido.emitido or not seguranca.baixarPedidoPermitido}" />
+			
 			<p:commandButton value="Cancelar"
 				action="#{cancelamentoPedidoBean.cancelarPedido}" process="@this"
 				update="@form"

@@ -64,7 +64,7 @@
 			styleClass="moeda" value="#{cadastroPedidoBean.pedido.valorFrete}"
 			disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
 			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-			<p:ajax event="change" process="@this" update="totalPedido"
+			<p:ajax event="change" process="@this" update="totalOrcamento"
 				listener="#{cadastroPedidoBean.recalcularPedido}" />
 		</p:inputText>
 
@@ -79,14 +79,14 @@
 			styleClass="moeda" value="#{cadastroPedidoBean.pedido.valorDesconto}"
 			disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
 			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-			<p:ajax event="change" process="@this" update="totalPedido"
+			<p:ajax event="change" process="@this" update="totalOrcamento"
 				listener="#{cadastroPedidoBean.recalcularPedido}" />
 		</p:inputText>
 
-		<p:outputLabel value="Total do pedido"
+		<p:outputLabel value="Total do orçamento"
 			style="font-weight: bold; font-size: 1.1em" />
 		<h:outputText value="#{cadastroPedidoBean.pedido.valorTotal}"
-			style="font-weight: bold; font-size: 1.1em" id="totalPedido">
+			style="font-weight: bold; font-size: 1.1em" id="totalOrcamento">
 			<f:convertNumber type="currency" />
 		</h:outputText>
 	</p:panelGrid>

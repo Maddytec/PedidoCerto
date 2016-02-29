@@ -20,7 +20,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.primefaces.event.SelectEvent;
 
 import br.com.maddytec.pedidovenda.model.Fornecedor;
-import br.com.maddytec.pedidovenda.model.EnderecoEntrega;
 import br.com.maddytec.pedidovenda.model.FormaPagamento;
 import br.com.maddytec.pedidovenda.model.ItemPedido;
 import br.com.maddytec.pedidovenda.model.Pedido;
@@ -75,7 +74,6 @@ public class CadastroPedidoBean implements Serializable {
 
 	private void limpar() {
 		pedido = new Pedido();
-		pedido.setEnderecoEntrega(new EnderecoEntrega());
 	}
 
 	public void pedidoAlterado(@Observes PedidoAlteradoEvent event) {
@@ -131,8 +129,7 @@ public class CadastroPedidoBean implements Serializable {
 						.addErrorMessage("Já exite um item no pedido com o produto informado.");
 			} else {
 				item.setProduto(this.produtoLinhaEditavel);
-				item.setValorUnitario(this.produtoLinhaEditavel
-						.getValorUnitario());
+				
 
 				this.pedido.adicionarItemVazio();
 				this.produtoLinhaEditavel = null;

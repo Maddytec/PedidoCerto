@@ -13,7 +13,7 @@
 			<p:inputText size="8" value="#{cadastroPedidoBean.sku}" label="SKU"
 				rendered="#{not item.produtoAssociado}">
 				<p:ajax event="change" process="@this"
-					update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal"
+					update="tabelaItens :frmCadastro:totalOrcamento :frmCadastro:subtotal"
 					listener="#{cadastroPedidoBean.carregarProdutoPorSku}" />
 			</p:inputText>
 		</p:column>
@@ -27,48 +27,56 @@
 				var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}"
 				forceSelection="true" rendered="#{not item.produtoAssociado}">
 				<p:ajax event="itemSelect"
-					update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal"
+					update="tabelaItens :frmCadastro:totalOrcamento :frmCadastro:subtotal"
 					listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}" />
 			</p:autoComplete>
 		</p:column>
-		<p:column headerText="Valor unitário"
+
+		<p:column headerText="Unidade de medida"
 			style="text-align: right; width: 120px">
-			<h:outputText value="#{item.valorUnitario}">
-				<f:convertNumber type="currency" />
+			<h:outputText value="#{item.produto.unidadeDeMedida}">
 			</h:outputText>
 		</p:column>
+
+
 		<p:column headerText="Quantidade"
 			style="text-align: center; width: 100px">
 			<p:inputText size="8" value="#{item.quantidade}" label="Quantidade"
 				disabled="#{cadastroPedidoBean.pedido.naoAlteravel and not cadastroPedidoBean.baixa}">
 				<p:ajax event="change" process="@this"
-					update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal"
+					update="tabelaItens :frmCadastro:totalOrcamento :frmCadastro:subtotal"
 					listener="#{cadastroPedidoBean.atualizarQuantidade(item, linha)}" />
 			</p:inputText>*
-		
-		</p:column>
-		
+			</p:column>
 
-		<p:column headerText="Valor total"
-			style="text-align: right; width: 100px">
-			<h:outputText value="#{item.valorTotal}">
-				<f:convertNumber type="currency" />
-			</h:outputText>
-		</p:column>
 
-		<p:columnGroup type="footer">
-			<p:row>
-				<p:column colspan="5" footerText="Subtotal"
-					style="text-align: right" />
-				<p:column style="text-align: right">
-					<f:facet name="footer">
-						<h:outputText value="#{cadastroPedidoBean.pedido.valorSubtotal}">
-							<f:convertNumber type="currency" />
-						</h:outputText>
-					</f:facet>
-				</p:column>
-			</p:row>
-		</p:columnGroup>
+		<p:column headerText="Valor unitário">
+				<p:inputText size="10" maxlength="10" styleClass="moeda"
+					value="#{item.valorUnitario}">
+					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+
+					<p:ajax event="change" process="@this"
+						update="tabelaItens :frmCadastro:totalOrcamento :frmCadastro:subtotal"
+						listener="#{cadastroPedidoBean.atualizarQuantidade(item, linha)}" />
+
+
+				</p:inputText>
+			</p:column>
+
+
+			<p:columnGroup type="footer">
+				<p:row>
+					<p:column colspan="5" footerText="Subtotal"
+						style="text-align: right" />
+					<p:column style="text-align: right">
+						<f:facet name="footer">
+							<h:outputText value="#{cadastroPedidoBean.pedido.valorSubtotal}">
+								<f:convertNumber type="currency" />
+							</h:outputText>
+						</f:facet>
+					</p:column>
+				</p:row>
+			</p:columnGroup>
 	</p:dataTable>
 
 </ui:composition>

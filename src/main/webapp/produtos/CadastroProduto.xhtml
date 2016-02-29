@@ -37,7 +37,7 @@
 			<p:panelGrid columns="2" id="painel"
 				style="width: 100%; margin-top: 20px; border-color: white;"
 				columnClasses="rotulo, campo ">
-				
+
 				<p:outputLabel value="SKU" for="sku" />
 				<p:inputText id="sku" size="20" maxlength="20"
 					value="#{cadastroProdutoBean.produto.sku}" />
@@ -72,18 +72,10 @@
 					required="true" />
 
 
-				<p:outputLabel value="Valor unitário" for="valorUnitario" />
-				<p:inputText id="valorUnitario" size="10" maxlength="10"
-					styleClass="moeda"
-					value="#{cadastroProdutoBean.produto.valorUnitario}"
-					required="true">
-					<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-				</p:inputText>
-
-
 				<p:outputLabel value="Status ativo" for="status" />
 				<p:selectBooleanCheckbox id="status"
-					value="#{cadastroProdutoBean.produto.status}" valueChangeListener="true"   />
+					value="#{cadastroProdutoBean.produto.status}"
+					valueChangeListener="true" />
 
 
 			</p:panelGrid>

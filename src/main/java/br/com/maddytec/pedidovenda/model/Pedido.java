@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +32,6 @@ public class Pedido implements Serializable {
 	private Long id;
 	private Date dataCriacao;
 	private String observacao;
-	private Date dataEntrega;
 	private BigDecimal valorFrete = BigDecimal.ZERO;
 	private BigDecimal valorDesconto = BigDecimal.ZERO;
 	private BigDecimal valorTotal = BigDecimal.ZERO;
@@ -41,7 +39,6 @@ public class Pedido implements Serializable {
 	private FormaPagamento formaPagamento;
 	private Usuario solicitante;
 	private Fornecedor fornecedor;
-	private EnderecoEntrega enderecoEntrega;
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	@Id
@@ -72,17 +69,6 @@ public class Pedido implements Serializable {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	}
-
-	@NotNull
-	@Temporal(TemporalType.DATE)
-	@Column(name = "data_entrega", nullable = false)
-	public Date getDataEntrega() {
-		return dataEntrega;
-	}
-
-	public void setDataEntrega(Date dataEntrega) {
-		this.dataEntrega = dataEntrega;
 	}
 
 	@NotNull
@@ -159,15 +145,6 @@ public class Pedido implements Serializable {
 		this.fornecedor = fornecedor;
 	}
 
-	@Embedded
-	public EnderecoEntrega getEnderecoEntrega() {
-		return enderecoEntrega;
-	}
-
-	public void setEnderecoEntrega(EnderecoEntrega enderecoEntrega) {
-		this.enderecoEntrega = enderecoEntrega;
-	}
-
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	public List<ItemPedido> getItens() {
 		return itens;
@@ -236,15 +213,14 @@ public class Pedido implements Serializable {
 	public void adicionarItemVazio() {
 		if (this.isOrcamento()) {
 			Produto produto = new Produto();
-			
+
 			ItemPedido item = new ItemPedido();
 			item.setProduto(produto);
 			item.setPedido(this);
-			
+
 			this.getItens().add(0, item);
 		}
 	}
-
 
 	@Transient
 	public boolean isOrcamento() {
@@ -253,8 +229,8 @@ public class Pedido implements Serializable {
 
 	public void removerItemVazio() {
 		ItemPedido primeiroItem = this.getItens().get(0);
-		
-		if(primeiroItem != null && primeiroItem.getProduto().getId() == null){
+
+		if (primeiroItem != null && primeiroItem.getProduto().getId() == null) {
 			this.getItens().remove(0);
 		}
 	}
@@ -288,29 +264,27 @@ public class Pedido implements Serializable {
 	private boolean isCancelavel() {
 		return this.isExistente() && !isCancelado() && !isBaixado();
 	}
-	
+
 	@Transient
 	public boolean isNaoBaixavel() {
 		return !isBaixavel();
 	}
-	
+
 	@Transient
 	private boolean isBaixavel() {
-		return this.isExistente()  && this.isEmitido() && !isBaixado() && !isCancelado();
+		return this.isExistente() && this.isEmitido() && !isBaixado()
+				&& !isCancelado();
 	}
-	
 
 	@Transient
 	private boolean isCancelado() {
-		return StatusPedido.CANCELADO.equals(this.getStatus()) ;
+		return StatusPedido.CANCELADO.equals(this.getStatus());
 	}
-	
+
 	@Transient
 	private boolean isBaixado() {
-		return StatusPedido.BAIXADO.equals(this.getStatus()) ;
+		return StatusPedido.BAIXADO.equals(this.getStatus());
 	}
-	
-	
 
 	@Transient
 	public boolean isNaoAlteravel() {
@@ -321,10 +295,10 @@ public class Pedido implements Serializable {
 	private boolean isAlteravel() {
 		return isOrcamento();
 	}
-	
+
 	@Transient
-	public boolean isNaoEnviavelPorEmail(){
+	public boolean isNaoEnviavelPorEmail() {
 		return this.isNovo() || this.isCancelado() || this.isBaixado();
 	}
-	
+
 }

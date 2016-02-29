@@ -26,7 +26,6 @@ public class Produto implements Serializable {
 	private String nome;
 	private String sku;
 	private String unidadeDeMedida;
-	private BigDecimal valorUnitario;
 	private Categoria categoria;
 	private boolean status = true;
 
@@ -71,14 +70,8 @@ public class Produto implements Serializable {
 		this.unidadeDeMedida = unidadeDeMedida;
 	}
 
-	@NotNull
-	@Column(name = "valor_unitario", nullable = false, precision = 10, scale = 2)
-	public BigDecimal getValorUnitario() {
-		return valorUnitario;
-	}
-
+	
 	public void setValorUnitario(BigDecimal valorUnitario) {
-		this.valorUnitario = valorUnitario;
 	}
 
 	@NotNull
