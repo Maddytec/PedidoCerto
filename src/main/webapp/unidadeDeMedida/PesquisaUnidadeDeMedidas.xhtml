@@ -1,0 +1,81 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa unidade de medidas</ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmPesquisa">
+		<p:focus context="frmPesquisa" />
+			<h1>Pesquisa unidade de medidas</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar"
+						action="#{pesquisaUnidadeDeMedidasBean.pesquisar()}" update="@form" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/unidadeDeMedida/CadastroUnidadeDeMedida" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px; border-color: white;"
+				columnClasses="rotulo, campo ">
+
+				<p:outputLabel value="Unidade de medida" for="unidadeDeMedida" />
+				<p:inputText id="unidadeDeMedida" size="40" maxlength="80"
+					value="#{pesquisaUnidadeDeMedidasBean.filtro.unidadeDeMedida}" />
+
+			</p:panelGrid>
+
+			<p:dataTable id="unidadeDeMedidasTable"
+				value="#{pesquisaUnidadeDeMedidasBean.unidadeDeMedidasFiltrados}"
+				var="unidadeDeMedida" style="margin-top: 20px"
+				emptyMessage="Nenhuma unidade de medida encontrada" rows="10"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom">
+
+				<p:column headerText="Unidade de medida"
+					style="text-align: left; width: 400px">
+					<h:outputText value="#{unidadeDeMedida.descricao}" />
+				</p:column>
+
+				<p:column style="text-align: center; width: 70px">
+					<p:button icon="ui-icon-pencil" title="Editar"
+						outcome="/unidadeDeMedida/CadastroUnidadeDeMedida">
+						<f:param name="unidadeDeMedida" value="#{unidadeDeMedida.id}" />
+					</p:button>
+
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":frmPesquisa:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener
+							target="#{pesquisaUnidadeDeMedidasBean.unidadeDeMedidaSelecionado}"
+							value="#{unidadeDeMedida}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog header="Exclusão de unidadeDeMedida"
+				message="Tem certeza que deseja excluir o unidadeDeMedida #{pesquisaUnidadeDeMedidasBean.unidadeDeMedidaSelecionado.descricao}?"
+				widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog">
+				<p:button value="Não"
+					ondblclick="PF('confirmacaoExclusao').hide(); return false;" />
+				<p:commandButton value="Sim"
+					oncomplete="PF('confirmacaoExclusao').hide(); return false;"
+					action="#{pesquisaUnidadeDeMedidasBean.excluirUnidadeDeMedida}" process="@this"
+					update=":frmPesquisa:unidadeDeMedidasTable" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+
+
+</ui:composition>

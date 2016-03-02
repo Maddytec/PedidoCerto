@@ -41,15 +41,16 @@
 		<intercept-url pattern="/Home.jsf" access="isAuthenticated()" />
 		<intercept-url pattern="/AcessoNegado.jsf" access="isAuthenticated()" />
 		<intercept-url pattern="/pedidos/**"
-			access="hasAnyRole('VENDEDORES','VENDAS-CONSULTA', 'ADMINISTRADORES')" />
+			access="hasAnyRole('SOLICITANTES','VENDAS-CONSULTA', 'ADMINISTRADORES')" />
 		<intercept-url pattern="/fornecedores/**"
-			access="hasAnyRole('ADMINISTRADORES', 'VENDEDORES', 'VENDAS-CONSULTA')" />
+			access="hasAnyRole('ADMINISTRADORES', 'SOLICITANTES', 'VENDAS-CONSULTA')" />
 		<intercept-url pattern="/relatorios/**"
-			access="hasAnyRole('ADMINISTRADORES', 'VENDEDORES', 'VENDAS-CONSULTA')" />
+			access="hasAnyRole('ADMINISTRADORES', 'SOLICITANTES', 'VENDAS-CONSULTA')" />
 		<intercept-url pattern="/dialogos/**"
-			access="hasAnyRole('ADMINISTRADORES', 'VENDEDORES', 'VENDAS-CONSULTA')" />
+			access="hasAnyRole('ADMINISTRADORES', 'SOLICITANTESS', 'VENDAS-CONSULTA')" />
 				<intercept-url pattern="/grupos/**" access="hasAnyRole('ADMINISTRADORES')" />
 		<intercept-url pattern="/categorias/**" access="hasAnyRole('ADMINISTRADORES')" />
+		<intercept-url pattern="/unidadeDeMedida/**" access="hasAnyRole('ADMINISTRADORES')" />
 		<intercept-url pattern="/produtos/**" access="hasAnyRole('ADMINISTRADORES')" />
 		<intercept-url pattern="/usuarios/**" access="hasAnyRole('ADMINISTRADORES')" />
 
