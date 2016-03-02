@@ -1,14 +1,12 @@
 package br.com.maddytec.pedidovenda.controller;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.maddytec.pedidovenda.model.Categoria;
-import br.com.maddytec.pedidovenda.repository.Categorias;
 import br.com.maddytec.pedidovenda.service.CadastroCategoriaService;
 import br.com.maddytec.pedidovenda.util.jsf.FacesUtil;
 
@@ -21,11 +19,7 @@ public class CadastroCategoriaBean implements Serializable {
 	@Inject
 	private CadastroCategoriaService cadastroCategoriaService;
 
-	@Inject
-	private Categorias categorias;
-
 	private Categoria categoria;
-	private List<Categoria> categoriasRaizes;
 
 	public CadastroCategoriaBean() {
 		limpar();
@@ -36,27 +30,24 @@ public class CadastroCategoriaBean implements Serializable {
 	}
 
 	public void inicializar() {
+		System.out.println("Inicializando...");
 
 		if (this.categoria == null) {
 			limpar();
 		}
-		
-		categoriasRaizes = categorias.raizes();
-
 	}
 
 	public void salvar() {
 		this.categoria = cadastroCategoriaService.salvar(this.categoria);
 		limpar();
 
-		FacesUtil.addInfoMessage("Categoria salvada com sucesso!");
+		FacesUtil.addInfoMessage("Categoria salva com sucesso!");
 	}
 
 	public boolean isEditando() {
 		return this.categoria.getId() != null;
 	}
 
-	
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -65,19 +56,6 @@ public class CadastroCategoriaBean implements Serializable {
 		this.categoria = categoria;
 	}
 
-	public List<Categoria> getCategoriasRaizes() {
-		return categoriasRaizes;
-	}
-
-	public Categorias getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(Categorias categorias) {
-		this.categorias = categorias;
-	}
-
-	public void setCategoriasRaizes(List<Categoria> categoriasRaizes) {
-		this.categoriasRaizes = categoriasRaizes;
-	}
+	
+	
 }

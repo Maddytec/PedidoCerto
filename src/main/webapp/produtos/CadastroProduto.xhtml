@@ -50,7 +50,7 @@
 				<p:selectOneMenu id="categoria"
 					value="#{cadastroProdutoBean.categoria}" required="true">
 					<f:selectItem itemLabel="Selecione a categoria" />
-					<f:selectItems value="#{cadastroProdutoBean.categoriasRaizes}"
+					<f:selectItems value="#{cadastroProdutoBean.categorias.lista()}"
 						var="categoria" itemValue="#{categoria}"
 						itemLabel="#{categoria.descricao}" />
 				</p:selectOneMenu>

@@ -30,7 +30,6 @@ import br.com.maddytec.pedidovenda.repository.Produtos;
 import br.com.maddytec.pedidovenda.repository.Usuarios;
 import br.com.maddytec.pedidovenda.service.CadastroPedidoService;
 import br.com.maddytec.pedidovenda.util.jsf.FacesUtil;
-import br.com.maddytec.pedidovenda.validation.SKU;
 
 @Named
 @ViewScoped
@@ -222,7 +221,7 @@ public class CadastroPedidoBean implements Serializable {
 		this.produtoLinhaEditavel = produtoLinhaEditavel;
 	}
 
-	@SKU
+	
 	public String getSku() {
 		return sku;
 	}

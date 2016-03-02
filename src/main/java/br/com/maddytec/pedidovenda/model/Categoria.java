@@ -19,7 +19,6 @@ public class Categoria implements Serializable {
 
 	private Long id;
 	private String descricao;
-	private Categoria categoria;
 	
 	@Id
 	@GeneratedValue
@@ -42,10 +41,7 @@ public class Categoria implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

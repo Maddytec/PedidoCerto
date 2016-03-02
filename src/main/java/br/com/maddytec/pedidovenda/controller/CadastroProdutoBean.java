@@ -27,10 +27,11 @@ public class CadastroProdutoBean implements Serializable {
 	private CadastroProdutoService cadastroProdutoService;
 
 	private Produto produto;
+
 	private Categoria categoria;
 
-	private List<Categoria> categoriasRaizes;
-	
+	private List<Categoria> allCategorias;
+
 	public CadastroProdutoBean() {
 		limpar();
 	}
@@ -41,18 +42,17 @@ public class CadastroProdutoBean implements Serializable {
 			limpar();
 		}
 
-		categoriasRaizes = categorias.raizes();
+		this.allCategorias = categorias.lista();
 
-		
 	}
 
-	
 	private void limpar() {
 		produto = new Produto();
 		categoria = null;
 	}
 
 	public void salvar() {
+		this.produto.setCategoria(categoria);
 		this.produto = cadastroProdutoService.salvar(this.produto);
 		limpar();
 
@@ -75,8 +75,8 @@ public class CadastroProdutoBean implements Serializable {
 		}
 	}
 
-	public List<Categoria> getCategoriasRaizes() {
-		return categoriasRaizes;
+	public List<Categoria> getAllCategorias() {
+		return allCategorias;
 	}
 
 	public Categorias getCategorias() {
@@ -95,7 +95,5 @@ public class CadastroProdutoBean implements Serializable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
-	
 
 }

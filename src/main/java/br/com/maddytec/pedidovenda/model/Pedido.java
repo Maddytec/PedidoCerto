@@ -144,7 +144,7 @@ public class Pedido implements Serializable {
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
-
+	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	public List<ItemPedido> getItens() {
 		return itens;
