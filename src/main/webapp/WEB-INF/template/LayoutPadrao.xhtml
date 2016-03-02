@@ -32,7 +32,7 @@
 			</h:link>
 		</div>
 
-		
+
 
 
 		<div style="float: right; margin-right: 110px">
@@ -42,23 +42,32 @@
 			<h:form style="display: inline-block">
 				<p:menubar styleClass="menu-sistema">
 					<p:submenu label="Cadastros">
+					
 						<p:menuitem value="Fornecedores"
 							outcome="/fornecedores/PesquisaFornecedores" />
-						<p:menuitem value="Usuários" outcome="/usuarios/PesquisaUsuarios" />
-						<p:menuitem value="Grupo de Usuário"
-							outcome="/grupos/PesquisaGrupos" />
-						<p:separator />
-						<p:menuitem value="Categorias"
+<p:separator />
+
+						<p:submenu label="Produtos">
+							<p:menuitem value="Categorias"
 								outcome="/categorias/PesquisaCategorias" />
-						<p:menuitem value="Produtos" outcome="/produtos/PesquisaProdutos" />
-						<p:menuitem value="Unidade de medida"
+							<p:menuitem value="Produtos" outcome="/produtos/PesquisaProdutos" />
+							<p:menuitem value="Unidades de medidas"
 								outcome="/unidadeDeMedida/PesquisaUnidadeDeMedidas" />
-						
-						
+						</p:submenu>
+<p:separator />
+						<p:submenu label="Usuários">
+							<p:menuitem value="Usuários" outcome="/usuarios/PesquisaUsuarios" />
+							<p:menuitem value="Grupos de Usuários"
+								outcome="/grupos/PesquisaGrupos" />
+						</p:submenu>
+
+
+
 					</p:submenu>
 
 					<p:submenu label="Orçamentos">
-						<p:menuitem value="Novo orçamento" outcome="/pedidos/CadastroPedido" />
+						<p:menuitem value="Novo orçamento"
+							outcome="/pedidos/CadastroPedido" />
 						<p:menuitem value="Pesquisa orçamento"
 							outcome="/pedidos/PesquisaPedidos" />
 					</p:submenu>

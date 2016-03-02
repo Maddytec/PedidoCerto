@@ -10,7 +10,9 @@ import javax.validation.constraints.NotNull;
 
 import br.com.maddytec.pedidovenda.model.Categoria;
 import br.com.maddytec.pedidovenda.model.Produto;
+import br.com.maddytec.pedidovenda.model.UnidadeDeMedida;
 import br.com.maddytec.pedidovenda.repository.Categorias;
+import br.com.maddytec.pedidovenda.repository.UnidadeDeMedidas;
 import br.com.maddytec.pedidovenda.service.CadastroProdutoService;
 import br.com.maddytec.pedidovenda.util.jsf.FacesUtil;
 
@@ -22,13 +24,18 @@ public class CadastroProdutoBean implements Serializable {
 
 	@Inject
 	private Categorias categorias;
-
+	
+	@Inject
+	private UnidadeDeMedidas unidadeDeMedidas;
+	
 	@Inject
 	private CadastroProdutoService cadastroProdutoService;
 
 	private Produto produto;
 
 	private Categoria categoria;
+	
+	private UnidadeDeMedida unidadeDeMedida;
 
 	private List<Categoria> allCategorias;
 
@@ -49,9 +56,11 @@ public class CadastroProdutoBean implements Serializable {
 	private void limpar() {
 		produto = new Produto();
 		categoria = null;
+		unidadeDeMedida = null;
 	}
 
 	public void salvar() {
+		this.produto.setUnidadeDeMedida(unidadeDeMedida);
 		this.produto.setCategoria(categoria);
 		this.produto = cadastroProdutoService.salvar(this.produto);
 		limpar();
@@ -72,6 +81,7 @@ public class CadastroProdutoBean implements Serializable {
 
 		if (produto != null) {
 			this.categoria = this.produto.getCategoria();
+			this.unidadeDeMedida = this.produto.getUnidadeDeMedida();
 		}
 	}
 
@@ -95,5 +105,27 @@ public class CadastroProdutoBean implements Serializable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
+	@NotNull
+	public UnidadeDeMedida getUnidadeDeMedida() {
+		return unidadeDeMedida;
+	}
+
+	public void setUnidadeDeMedida(UnidadeDeMedida unidadeDeMedida) {
+		this.unidadeDeMedida = unidadeDeMedida;
+	}
+
+	public UnidadeDeMedidas getUnidadeDeMedidas() {
+		return unidadeDeMedidas;
+	}
+
+	public void setUnidadeDeMedidas(UnidadeDeMedidas unidadeDeMedidas) {
+		this.unidadeDeMedidas = unidadeDeMedidas;
+	}
+	
+	
+	
+	
+	
 
 }

@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import br.com.maddytec.pedidovenda.converter.UnidadeDeMedidaConverter;
 import br.com.maddytec.pedidovenda.model.UnidadeDeMedida;
+import br.com.maddytec.pedidovenda.repository.UnidadeDeMedidas;
 import br.com.maddytec.pedidovenda.service.CadastroUnidadeDeMedidaService;
 import br.com.maddytec.pedidovenda.util.jsf.FacesUtil;
 
@@ -17,6 +18,9 @@ public class CadastroUnidadeDeMedidaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	private UnidadeDeMedidas unidadeDeMedidas;	
+	
 	@Inject
 	private CadastroUnidadeDeMedidaService cadastroUnidadeDeMedidaService;
 
@@ -65,6 +69,14 @@ public class CadastroUnidadeDeMedidaBean implements Serializable {
 
 	public void setUnidadeDeMedida(UnidadeDeMedida unidadeDeMedida) {
 		this.unidadeDeMedida = unidadeDeMedida;
+	}
+
+	public UnidadeDeMedidas getUnidadeDeMedidas() {
+		return unidadeDeMedidas;
+	}
+
+	public void setUnidadeDeMedidas(UnidadeDeMedidas unidadeDeMedidas) {
+		this.unidadeDeMedidas = unidadeDeMedidas;
 	}
 
 	

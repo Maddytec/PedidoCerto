@@ -24,7 +24,7 @@ public class Produto implements Serializable {
 	private Long id;
 	private String nome;
 	private String sku;
-	private String unidadeDeMedida;
+	private UnidadeDeMedida unidadeDeMedida;
 	private Categoria categoria;
 	private boolean status = true;
 
@@ -58,14 +58,14 @@ public class Produto implements Serializable {
 		this.sku = sku == null ? null : sku.toUpperCase();
 	}
 
-	@NotBlank
-	@Size(max = 15)
-	@Column(nullable = false, length = 15)
-	public String getUnidadeDeMedida() {
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "unidade_de_medida_id", nullable = false)
+	public UnidadeDeMedida getUnidadeDeMedida() {
 		return unidadeDeMedida;
 	}
 
-	public void setUnidadeDeMedida(String unidadeDeMedida) {
+	public void setUnidadeDeMedida(UnidadeDeMedida unidadeDeMedida) {
 		this.unidadeDeMedida = unidadeDeMedida;
 	}
 

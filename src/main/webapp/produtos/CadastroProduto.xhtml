@@ -55,12 +55,16 @@
 						itemLabel="#{categoria.descricao}" />
 				</p:selectOneMenu>
 
+				
 				<p:outputLabel value="Unidade de medida" for="unidadeDeMedida" />
-				<p:inputText id="unidadeDeMedida" size="15" maxlength="15"
-					value="#{cadastroProdutoBean.produto.unidadeDeMedida}"
-					required="true" />
-
-
+				<p:selectOneMenu id="unidadeDeMedida"
+					value="#{cadastroProdutoBean.unidadeDeMedida}" required="true">
+					<f:selectItem itemLabel="Selecione a unidade de medida" />
+					<f:selectItems value="#{cadastroUnidadeDeMedidaBean.unidadeDeMedidas.lista()}"
+						var="unidadeDeMedida" itemValue="#{unidadeDeMedida}"
+						itemLabel="#{unidadeDeMedida.descricao}" />
+				</p:selectOneMenu>
+				
 				<p:outputLabel value="Status ativo" for="status" />
 				<p:selectBooleanCheckbox id="status"
 					value="#{cadastroProdutoBean.produto.status}"
