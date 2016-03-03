@@ -65,12 +65,22 @@
 
 					</p:submenu>
 
-					<p:submenu label="Orçamentos">
-						<p:menuitem value="Novo orçamento"
+					<p:submenu label="Pedidos">
+						<p:submenu label="Orçamentos">
+							<p:menuitem value="Novo orçamento"
+							outcome="/orcamentos/CadastroOrcamento" />
+							<p:menuitem value="Pesquisa orçamentos"
+							outcome="/orcamentos/PesquisaOrcamentos" />
+						</p:submenu>
+						
+						<p:submenu label="Pedidos">
+							<p:menuitem value="Novo pedido"
 							outcome="/pedidos/CadastroPedido" />
-						<p:menuitem value="Pesquisa orçamento"
+							<p:menuitem value="Pesquisa pedidos"
 							outcome="/pedidos/PesquisaPedidos" />
-					</p:submenu>
+						</p:submenu>
+						
+						</p:submenu>
 
 					<p:submenu label="Relatórios">
 						<p:menuitem value="Pedidos emitidos"
