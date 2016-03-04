@@ -17,12 +17,12 @@
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:commandButton ajax="false" icon="xlsx">
-						<p:dataExporter type="xls" target="pedidosTable"
-							fileName="Pedidos"
-							postProcessor="#{pesquisaPedidosBean.posProcessarXls}">
+						<p:dataExporter type="xls" target="orcamentosTable"
+							fileName="Orcamentos"
+							postProcessor="#{pesquisaOrcamentosBean.posProcessarXls}">
 						</p:dataExporter>
 					</p:commandButton>
-					<p:button value="Novo" outcome="/pedidos/CadastroPedido" />
+					<p:button value="Novo" outcome="/orcamentos/CadastroOrcamento" />
 				</p:toolbarGroup>
 			</p:toolbar>
 
@@ -32,84 +32,79 @@
 				<p:outputLabel value="Número" />
 				<h:panelGroup>
 					<p:inputText size="10"
-						value="#{pesquisaPedidosBean.filtro.numeroDe}" />
+						value="#{pesquisaOrcamentosBean.filtro.numeroDe}" />
 					a
 					<p:inputText size="10"
-						value="#{pesquisaPedidosBean.filtro.numeroAte}" />
+						value="#{pesquisaOrcamentosBean.filtro.numeroAte}" />
 				</h:panelGroup>
 				<p:outputLabel value="Data de criação" />
 				<h:panelGroup>
 					<p:calendar size="10"
-						value="#{pesquisaPedidosBean.filtro.dataCriacaoDe}"
+						value="#{pesquisaOrcamentosBean.filtro.dataCriacaoDe}"
 						pattern="dd/MM/yyyy" locale="pt_BR" />
 					a
 					<p:calendar size="10"
-						value="#{pesquisaPedidosBean.filtro.dataCriacaoAte}"
+						value="#{pesquisaOrcamentosBean.filtro.dataCriacaoAte}"
 						pattern="dd/MM/yyyy" locale="pt_BR" />
 				</h:panelGroup>
 
 				<p:outputLabel value="Solicitante" />
-				<p:inputText value="#{pesquisaPedidosBean.filtro.nomeSolicitante}"
-					size="40" />
+				<p:inputText
+					value="#{pesquisaOrcamentosBean.filtro.nomeSolicitante}" size="40" />
 
 				<p:outputLabel value="Fornencedor" />
-				<p:inputText value="#{pesquisaPedidosBean.filtro.nomeFornecedor}"
+				<p:inputText value="#{pesquisaOrcamentosBean.filtro.nomeFornecedor}"
 					size="40" />
 
 				<p:outputLabel value="Status" />
-				<p:selectManyCheckbox value="#{pesquisaPedidosBean.filtro.statuses}">
-					<f:selectItems value="#{pesquisaPedidosBean.statuses}" var="status"
-						itemValue="#{status}" itemLabel="#{status.descricao}" />
+				<p:selectManyCheckbox
+					value="#{pesquisaOrcamentosBean.filtro.statuses}">
+					<f:selectItems value="#{pesquisaOrcamentosBean.statuses}"
+						var="status" itemValue="#{status}" itemLabel="#{status.descricao}" />
 				</p:selectManyCheckbox>
 
 			</p:panelGrid>
 
-			<p:dataTable id="pedidosTable" value="#{pesquisaPedidosBean.model}"
-				var="pedido" style="margin-top: 20px"
-				emptyMessage="Nenhum pedido encontrado" rows="10" paginator="true"
-				paginatorAlwaysVisible="false" paginatorPosition="bottom"
-				lazy="true">
+			<p:dataTable id="orcamentosTable"
+				value="#{pesquisaOrcamentosBean.model}" var="orcamento"
+				style="margin-top: 20px" emptyMessage="Nenhum orcamento encontrado"
+				rows="10" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom" lazy="true">
 				<p:column headerText="Número"
-					style="text-align: center; width: 70px" sortBy="#{pedido.id}">
-					<h:outputText value="#{pedido.id}" />
+					style="text-align: center; width: 70px" sortBy="#{orcamento.id}">
+					<h:outputText value="#{orcamento.id}" />
 				</p:column>
-				<p:column headerText="Fornecedor" sortBy="#{pedido.fornecedor.nome}">
-					<h:outputText value="#{pedido.fornecedor.nome}" />
+				<p:column headerText="Fornecedor"
+					sortBy="#{orcamento.fornecedor.nome}">
+					<h:outputText value="#{orcamento.fornecedor.nome}" />
 				</p:column>
 
-				<p:column headerText="Solicitante" sortBy="#{pedido.solicitante}">
-					<h:outputText value="#{pedido.solicitante.nome}" />
+				<p:column headerText="Solicitante" sortBy="#{orcamento.solicitante}">
+					<h:outputText value="#{orcamento.solicitante.nome}" />
 				</p:column>
 				<p:column headerText="Data de criação"
 					style="text-align: center; width: 120px;"
-					sortBy="#{pedido.dataCriacao}">
-					<h:outputText value="#{pedido.dataCriacao}">
+					sortBy="#{orcamento.dataCriacao}">
+					<h:outputText value="#{orcamento.dataCriacao}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
-				
-				<p:column headerText="Valor total"
-					style="text-align: right; width: 90px"
-					sortBy="#{pedido.valorTotal}">
-					<h:outputText value="#{pedido.valorTotal}">
-						<f:convertNumber type="currency" />
-					</h:outputText>
-				</p:column>
 
-				<p:column headerText="Status" style="width: 70px" sortBy="#{pedido.status}">
-					<h:outputText value="#{pedido.status.descricao}" />
+				<p:column headerText="Status" style="width: 70px"
+					sortBy="#{orcamento.status}">
+					<h:outputText value="#{orcamento.status.descricao}" />
 				</p:column>
 
 				<p:column style="text-align: center; width: 80px" exportable="false">
 					<p:button icon="ui-icon-pencil" title="Editar"
-						outcome="/pedidos/CadastroPedido"
-						disabled="#{not seguranca.baixarPedidoPermitido or pedido.status != 'ORCAMENTO'}">
-						<f:param name="pedido" value="#{pedido.id}" />
-						<f:event listener="#{cadastroPedidoBean.isEditando}"
+						outcome="/orcamentos/CadastroOrcamento"
+						disabled="#{orcamento.status != 'ORCAMENTO'}">
+						<f:param name="orcamento" value="#{orcamento.id}" />
+						<f:event listener="#{cadastroOrcamentoBean.isEditando}"
 							type="preRenderView" />
 					</p:button>
 
-					
+
 				</p:column>
 
 			</p:dataTable>

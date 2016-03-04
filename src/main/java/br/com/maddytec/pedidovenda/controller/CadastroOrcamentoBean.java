@@ -19,17 +19,17 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.hibernate.validator.constraints.NotBlank;
 import org.primefaces.event.SelectEvent;
 
-import br.com.maddytec.orcamentovenda.model.Fornecedor;
-import br.com.maddytec.orcamentovenda.model.FormaPagamento;
-import br.com.maddytec.orcamentovenda.model.ItemOrcamento;
-import br.com.maddytec.orcamentovenda.model.Orcamento;
-import br.com.maddytec.orcamentovenda.model.Produto;
-import br.com.maddytec.orcamentovenda.model.Usuario;
-import br.com.maddytec.orcamentovenda.repository.Fornecedores;
-import br.com.maddytec.orcamentovenda.repository.Produtos;
-import br.com.maddytec.orcamentovenda.repository.Usuarios;
-import br.com.maddytec.orcamentovenda.service.CadastroOrcamentoService;
-import br.com.maddytec.orcamentovenda.util.jsf.FacesUtil;
+import br.com.maddytec.pedidovenda.model.Fornecedor;
+import br.com.maddytec.pedidovenda.model.FormaPagamento;
+import br.com.maddytec.pedidovenda.model.ItemOrcamento;
+import br.com.maddytec.pedidovenda.model.Orcamento;
+import br.com.maddytec.pedidovenda.model.Produto;
+import br.com.maddytec.pedidovenda.model.Usuario;
+import br.com.maddytec.pedidovenda.repository.Fornecedores;
+import br.com.maddytec.pedidovenda.repository.Produtos;
+import br.com.maddytec.pedidovenda.repository.Usuarios;
+import br.com.maddytec.pedidovenda.service.CadastroOrcamentoService;
+import br.com.maddytec.pedidovenda.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
@@ -88,9 +88,7 @@ public class CadastroOrcamentoBean implements Serializable {
 			this.solicitantes = usuarios.solicitantes();
 
 			this.orcamento.adicionarItemVazio();
-
-			this.recalcularOrcamento();
-		
+	
 	}
 
 	public void salvar() {
@@ -103,12 +101,6 @@ public class CadastroOrcamentoBean implements Serializable {
 					+ " salvo com sucesso!");
 		} finally {
 			this.orcamento.adicionarItemVazio();
-		}
-	}
-
-	public void recalcularOrcamento() {
-		if (orcamento != null) {
-			this.orcamento.recalcularValorTotal();
 		}
 	}
 
@@ -133,8 +125,6 @@ public class CadastroOrcamentoBean implements Serializable {
 				this.orcamento.adicionarItemVazio();
 				this.produtoLinhaEditavel = null;
 				this.sku = null;
-
-				this.recalcularOrcamento();
 			}
 		}
 	}
@@ -154,19 +144,6 @@ public class CadastroOrcamentoBean implements Serializable {
 
 	public List<Produto> completarProduto(String nome) {
 		return this.produtos.porNome(nome);
-	}
-
-	public void atualizarQuantidade(ItemOrcamento item, int linha) {
-		if (item.getQuantidade() < 1) {
-			if (linha == 0) {
-				item.setQuantidade(1);
-			} else {
-				this.getOrcamento().getItens().remove(linha);
-			}
-
-		}
-
-		this.orcamento.recalcularValorTotal();
 	}
 
 	public FormaPagamento[] getFormaPagamento() {

@@ -32,19 +32,27 @@ public class Seguranca {
 	
 	public boolean isEmitirPedidoPermitido(){
 		return externalContext.isUserInRole("ADMINISTRADORES") 
-				|| externalContext.isUserInRole("VENDEDORES");
+				|| externalContext.isUserInRole("SOLICITANTES");
 	}
+	
+	public boolean isEmitirOrcamentoPermitido(){
+		return externalContext.isUserInRole("ADMINISTRADORES") 
+				|| externalContext.isUserInRole("COMPRADORES");
+	}
+	
 	
 	public boolean isCancelarPedidoPermitido(){
 		return externalContext.isUserInRole("ADMINISTRADORES") 
-				|| externalContext.isUserInRole("VENDEDORES");
+				|| externalContext.isUserInRole("SOLICITANTES");
 	}
 	
-	public boolean isBaixarPedidoPermitido(){
+	public boolean isCancelarOrcamentoPermitido(){
 		return externalContext.isUserInRole("ADMINISTRADORES") 
-				|| externalContext.isUserInRole("VENDEDORES");
+				|| externalContext.isUserInRole("SOLICITANTES");
 	}
-		
+	
+	
+	
 	public boolean isPermitidoSalvarFornecedor(){
 		return externalContext.isUserInRole("ADMINISTRADORES") 
 				|| externalContext.isUserInRole("COMPRADORES");

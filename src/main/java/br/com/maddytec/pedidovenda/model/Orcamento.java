@@ -24,7 +24,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "pedido")
+@Table(name = "orcamento")
 public class Orcamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,12 +34,11 @@ public class Orcamento implements Serializable {
 	private String observacao;
 	private BigDecimal valorFrete = BigDecimal.ZERO;
 	private BigDecimal valorDesconto = BigDecimal.ZERO;
-	private BigDecimal valorTotal = BigDecimal.ZERO;
-	private StatusPedido status = StatusPedido.ORCAMENTO;
+	private StatusOrcamento status = StatusOrcamento.ORCAMENTO;
 	private FormaPagamento formaPagamento;
 	private Usuario solicitante;
 	private Fornecedor fornecedor;
-	private List<ItemPedido> itens = new ArrayList<>();
+	private List<ItemOrcamento> itens = new ArrayList<>();
 
 	@Id
 	@GeneratedValue
@@ -92,23 +91,13 @@ public class Orcamento implements Serializable {
 	}
 
 	@NotNull
-	@Column(name = "valor_total", nullable = false, precision = 10, scale = 2)
-	public BigDecimal getValorTotal() {
-		return valorTotal;
-	}
-
-	public void setValorTotal(BigDecimal valorTotal) {
-		this.valorTotal = valorTotal;
-	}
-
-	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status_pedido", nullable = false, length = 20)
-	public StatusPedido getStatus() {
+	@Column(name = "status_orcamento", nullable = false, length = 20)
+	public StatusOrcamento getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusPedido status) {
+	public void setStatus(StatusOrcamento status) {
 		this.status = status;
 	}
 
@@ -145,12 +134,12 @@ public class Orcamento implements Serializable {
 		this.fornecedor = fornecedor;
 	}
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	public List<ItemPedido> getItens() {
+	@OneToMany(mappedBy = "orcamento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	public List<ItemOrcamento> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<ItemPedido> itens) {
+	public void setItens(List<ItemOrcamento> itens) {
 		this.itens = itens;
 	}
 
@@ -189,34 +178,13 @@ public class Orcamento implements Serializable {
 		return true;
 	}
 
-	@Transient
-	public BigDecimal getValorSubtotal() {
-		return this.getValorTotal().subtract(this.getValorFrete())
-				.add(this.getValorDesconto());
-	}
-
-	public void recalcularValorTotal() {
-		BigDecimal total = BigDecimal.ZERO;
-
-		total = total.add(this.getValorFrete()).subtract(
-				this.getValorDesconto());
-
-		for (ItemPedido item : this.getItens()) {
-			if (item.getProduto() != null && item.getProduto().getId() != null) {
-				total = total.add(item.getValorTotal());
-			}
-		}
-
-		this.setValorTotal(total);
-	}
-
 	public void adicionarItemVazio() {
 		if (this.isOrcamento()) {
 			Produto produto = new Produto();
 
-			ItemPedido item = new ItemPedido();
+			ItemOrcamento item = new ItemOrcamento();
 			item.setProduto(produto);
-			item.setPedido(this);
+			item.setOrcamento(this);
 
 			this.getItens().add(0, item);
 		}
@@ -224,20 +192,15 @@ public class Orcamento implements Serializable {
 
 	@Transient
 	public boolean isOrcamento() {
-		return StatusPedido.ORCAMENTO.equals(this.getStatus());
+		return StatusOrcamento.ORCAMENTO.equals(this.getStatus());
 	}
 
 	public void removerItemVazio() {
-		ItemPedido primeiroItem = this.getItens().get(0);
+		ItemOrcamento primeiroItem = this.getItens().get(0);
 
 		if (primeiroItem != null && primeiroItem.getProduto().getId() == null) {
 			this.getItens().remove(0);
 		}
-	}
-
-	@Transient
-	public boolean isValorTotalNegativo() {
-		return this.getValorTotal().compareTo(BigDecimal.ZERO) < 0;
 	}
 
 	@Transient
@@ -262,7 +225,7 @@ public class Orcamento implements Serializable {
 
 	@Transient
 	private boolean isCancelado() {
-		return StatusPedido.CANCELADO.equals(this.getStatus());
+		return StatusOrcamento.CANCELADO.equals(this.getStatus());
 	}
 
 	@Transient
