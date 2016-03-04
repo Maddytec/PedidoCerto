@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dataTable value="#{cadastroOrcamentoBean.orcamento.itens}"
+		var="item" rowIndexVar="linha" id="tabelaItens">
+		<p:column headerText="SKU" style="text-align: center; width: 100px">
+			<h:outputText value="#{item.produto.sku}"
+				rendered="#{item.produtoAssociado}" />
+
+			<p:inputText size="8" value="#{cadastroOrcamentoBean.sku}"
+				label="SKU" rendered="#{not item.produtoAssociado}">
+				<p:ajax event="change" process="@this" update="tabelaItens"
+					listener="#{cadastroOrcamentoBean.carregarProdutoPorSku}" />
+			</p:inputText>
+		</p:column>
+		<p:column headerText="Produto">
+			<h:outputText value="#{item.produto.nome}"
+				rendered="#{item.produtoAssociado}" />
+
+			<p:autoComplete styleClass="produto-tabela"
+				value="#{cadastroOrcamentoBean.produtoLinhaEditavel}"
+				completeMethod="#{cadastroOrcamentoBean.completarProduto}"
+				var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}"
+				forceSelection="true" rendered="#{not item.produtoAssociado}">
+				<p:ajax event="itemSelect" update="tabelaItens"
+					listener="#{cadastroOrcamentoBean.carregarProdutoLinhaEditavel}" />
+			</p:autoComplete>
+		</p:column>
+
+		<p:column headerText="Unidade de medida"
+			style="text-align: right; width: 120px">
+			<h:outputText value="#{item.produto.unidadeDeMedida.descricao}">
+			</h:outputText>
+		</p:column>
+
+
+		<p:column headerText="Valor unitário">
+			<p:inputText size="10" maxlength="10" styleClass="moeda"
+				value="#{item.valorUnitario}"
+				disabled="#{cadastroOrcamentoBean.orcamento.naoAlteravel}">
+				<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+			</p:inputText>
+		</p:column>
+
+
+
+	</p:dataTable>
+
+</ui:composition>

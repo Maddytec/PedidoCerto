@@ -6,33 +6,33 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
 	<f:metadata>
-		<o:viewParam name="pedido" value="#{cadastroPedidoBean.pedido}" />
+		<o:viewParam name="orcamento" value="#{cadastroOrcamentoBean.orcamento}" />
 	
-		<f:viewAction action="#{cadastroPedidoBean.inicializar}" />
+		<f:viewAction action="#{cadastroOrcamentoBean.inicializar}" />
 	</f:metadata>
 
 
-	<ui:define name="titulo">#{cadastroPedidoBean.baixa ? "Baixa de orçamento" : (cadastroPedidoBean.edicao ? "Edição de orçamento" : "Novo orçamento")}</ui:define>
+	<ui:define name="titulo">#{cadastroOrcamentoBean.baixa ? "Baixa de orçamento" : (cadastroOrcamentoBean.edicao ? "Edição de orçamento" : "Novo orçamento")}</ui:define>
 
 	<ui:define name="corpo">
 		<h:form id="frmCadastro">
 			<p:focus context="frmCadastro" />
-			<h1>#{cadastroPedidoBean.baixa ? "Baixa de orçamento" :
-				(cadastroPedidoBean.edicao ? "Edição de orçamento" : "Novo orçamento")}</h1>
+			<h1>#{cadastroOrcamentoBean.baixa ? "Baixa de orçamento" :
+				(cadastroOrcamentoBean.edicao ? "Edição de orçamento" : "Novo orçamento")}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
-			<ui:include src="/WEB-INF/template/pedidos/BotoesPedido.xhtml" />
+			<ui:include src="/WEB-INF/template/orcamentos/BotoesOrcamento.xhtml" />
 
-			<ui:include src="/WEB-INF/template/pedidos/CapaPedido.xhtml" />
+			<ui:include src="/WEB-INF/template/orcamentos/CapaOrcamento.xhtml" />
 
 			<p:tabView style="margin-top: 20px">
 				<p:tab title="Itens">
-					<ui:include src="/WEB-INF/template/pedidos/ItensPedido.xhtml" />
+					<ui:include src="/WEB-INF/template/orcamentos/ItensOrcamento.xhtml" />
 				</p:tab>
 				
 				<p:tab title="Observação">
-					<ui:include src="/WEB-INF/template/pedidos/ObservacaoPedido.xhtml" />
+					<ui:include src="/WEB-INF/template/orcamentos/ObservacaoOrcamento.xhtml" />
 				</p:tab>
 			</p:tabView>
 
