@@ -1,7 +1,6 @@
 package br.com.maddytec.pedidovenda.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,13 +31,8 @@ public class Pedido implements Serializable {
 	private Long id;
 	private Date dataCriacao;
 	private String observacao;
-	private BigDecimal valorFrete = BigDecimal.ZERO;
-	private BigDecimal valorDesconto = BigDecimal.ZERO;
-	private BigDecimal valorTotal = BigDecimal.ZERO;
 	private StatusPedido status = StatusPedido.ORCAMENTO;
-	private FormaPagamento formaPagamento;
 	private Usuario solicitante;
-	private Fornecedor fornecedor;
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	@Id
@@ -72,36 +66,6 @@ public class Pedido implements Serializable {
 	}
 
 	@NotNull
-	@Column(name = "valor_frete", nullable = false, precision = 10, scale = 2)
-	public BigDecimal getValorFrete() {
-		return valorFrete;
-	}
-
-	public void setValorFrete(BigDecimal valorFrete) {
-		this.valorFrete = valorFrete;
-	}
-
-	@NotNull
-	@Column(name = "valor_desconto", nullable = false, precision = 10, scale = 2)
-	public BigDecimal getValorDesconto() {
-		return valorDesconto;
-	}
-
-	public void setValorDesconto(BigDecimal valorDesconto) {
-		this.valorDesconto = valorDesconto;
-	}
-
-	@NotNull
-	@Column(name = "valor_total", nullable = false, precision = 10, scale = 2)
-	public BigDecimal getValorTotal() {
-		return valorTotal;
-	}
-
-	public void setValorTotal(BigDecimal valorTotal) {
-		this.valorTotal = valorTotal;
-	}
-
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_pedido", nullable = false, length = 20)
 	public StatusPedido getStatus() {
@@ -110,17 +74,6 @@ public class Pedido implements Serializable {
 
 	public void setStatus(StatusPedido status) {
 		this.status = status;
-	}
-
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	@Column(name = "forma_pagamento", nullable = false, length = 20)
-	public FormaPagamento getFormaPagamento() {
-		return formaPagamento;
-	}
-
-	public void setFormaPagamento(FormaPagamento formaPagamento) {
-		this.formaPagamento = formaPagamento;
 	}
 
 	@NotNull
@@ -134,17 +87,6 @@ public class Pedido implements Serializable {
 		this.solicitante = solicitante;
 	}
 
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "fornecedor_id", nullable = false)
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
-	}
-	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	public List<ItemPedido> getItens() {
 		return itens;
@@ -189,27 +131,6 @@ public class Pedido implements Serializable {
 		return true;
 	}
 
-	@Transient
-	public BigDecimal getValorSubtotal() {
-		return this.getValorTotal().subtract(this.getValorFrete())
-				.add(this.getValorDesconto());
-	}
-
-	public void recalcularValorTotal() {
-		BigDecimal total = BigDecimal.ZERO;
-
-		total = total.add(this.getValorFrete()).subtract(
-				this.getValorDesconto());
-
-		for (ItemPedido item : this.getItens()) {
-			if (item.getProduto() != null && item.getProduto().getId() != null) {
-				total = total.add(item.getValorTotal());
-			}
-		}
-
-		this.setValorTotal(total);
-	}
-
 	public void adicionarItemVazio() {
 		if (this.isOrcamento()) {
 			Produto produto = new Produto();
@@ -233,11 +154,6 @@ public class Pedido implements Serializable {
 		if (primeiroItem != null && primeiroItem.getProduto().getId() == null) {
 			this.getItens().remove(0);
 		}
-	}
-
-	@Transient
-	public boolean isValorTotalNegativo() {
-		return this.getValorTotal().compareTo(BigDecimal.ZERO) < 0;
 	}
 
 	@Transient

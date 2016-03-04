@@ -16,8 +16,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.hibernate.validator.constraints.NotBlank;
-import org.primefaces.event.SelectEvent;
 
 import br.com.maddytec.pedidovenda.model.Fornecedor;
 import br.com.maddytec.pedidovenda.model.FormaPagamento;
@@ -67,10 +65,6 @@ public class CadastroPedidoBean implements Serializable {
 		limpar();
 	}
 
-	public void fornecedorSelecionado(SelectEvent event) {
-		pedido.setFornecedor((Fornecedor) event.getObject());
-	}
-
 	private void limpar() {
 		pedido = new Pedido();
 	}
@@ -89,8 +83,6 @@ public class CadastroPedidoBean implements Serializable {
 
 			this.pedido.adicionarItemVazio();
 
-			this.recalcularPedido();
-		
 	}
 
 	public void salvar() {
@@ -103,12 +95,6 @@ public class CadastroPedidoBean implements Serializable {
 					+ " salvo com sucesso!");
 		} finally {
 			this.pedido.adicionarItemVazio();
-		}
-	}
-
-	public void recalcularPedido() {
-		if (pedido != null) {
-			this.pedido.recalcularValorTotal();
 		}
 	}
 
@@ -134,7 +120,6 @@ public class CadastroPedidoBean implements Serializable {
 				this.produtoLinhaEditavel = null;
 				this.sku = null;
 
-				this.recalcularPedido();
 			}
 		}
 	}
@@ -166,7 +151,6 @@ public class CadastroPedidoBean implements Serializable {
 
 		}
 
-		this.pedido.recalcularValorTotal();
 	}
 
 	public FormaPagamento[] getFormaPagamento() {
@@ -242,12 +226,7 @@ public class CadastroPedidoBean implements Serializable {
 		return baixa;
 	}
 
-	@NotBlank
-	public String getNomeFornecedor() {
-		return pedido.getFornecedor() == null ? null : pedido.getFornecedor()
-				.getNome();
-	}
-	
+		
 	public void setNomeFornecedor(String nomeFornecedor){
 	//corrige erro do readonly	
 	}
