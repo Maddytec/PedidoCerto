@@ -2,7 +2,7 @@ package br.com.maddytec.pedidovenda.model;
 
 public enum StatusOrcamento {
 	
-	ORCAMENTO("Orçamento"),
+	ATIVO("Ativo"),
 	CANCELADO("Cancelado");
 		
 	private String descricao;

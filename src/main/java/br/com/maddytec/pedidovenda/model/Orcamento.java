@@ -34,7 +34,7 @@ public class Orcamento implements Serializable {
 	private String observacao;
 	private BigDecimal valorFrete = BigDecimal.ZERO;
 	private BigDecimal valorDesconto = BigDecimal.ZERO;
-	private StatusOrcamento status = StatusOrcamento.ORCAMENTO;
+	private StatusOrcamento status = StatusOrcamento.ATIVO;
 	private FormaPagamento formaPagamento;
 	private Usuario solicitante;
 	private Fornecedor fornecedor;
@@ -179,7 +179,7 @@ public class Orcamento implements Serializable {
 	}
 
 	public void adicionarItemVazio() {
-		if (this.isOrcamento()) {
+		if (this.isOrcamentoAtivo()) {
 			Produto produto = new Produto();
 
 			ItemOrcamento item = new ItemOrcamento();
@@ -191,8 +191,8 @@ public class Orcamento implements Serializable {
 	}
 
 	@Transient
-	public boolean isOrcamento() {
-		return StatusOrcamento.ORCAMENTO.equals(this.getStatus());
+	public boolean isOrcamentoAtivo() {
+		return StatusOrcamento.ATIVO.equals(this.getStatus());
 	}
 
 	public void removerItemVazio() {
@@ -210,7 +210,7 @@ public class Orcamento implements Serializable {
 
 	@Transient
 	public boolean isEmissivel() {
-		return this.isExistente() && this.isOrcamento();
+		return this.isExistente() && this.isOrcamentoAtivo();
 	}
 
 	@Transient
@@ -235,7 +235,7 @@ public class Orcamento implements Serializable {
 
 	@Transient
 	private boolean isAlteravel() {
-		return isOrcamento();
+		return isOrcamentoAtivo();
 	}
 
 	@Transient

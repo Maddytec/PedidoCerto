@@ -5,12 +5,12 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="titulo">Pesquisa orçamentos</ui:define>
+	<ui:define name="titulo">Pesquisa pedidos</ui:define>
 
 	<ui:define name="corpo">
 		<h:form id="frm">
 			<p:focus context="frm" />
-			<h1>Pesquisa orçamentos</h1>
+			<h1>Pesquisa pedidos</h1>
 			<p:toolbar style="margin-top: 20px">
 				<p:toolbarGroup>
 					<p:commandButton value="Pesquisar" update="@form" />
@@ -52,10 +52,6 @@
 				<p:inputText value="#{pesquisaPedidosBean.filtro.nomeSolicitante}"
 					size="40" />
 
-				<p:outputLabel value="Fornencedor" />
-				<p:inputText value="#{pesquisaPedidosBean.filtro.nomeFornecedor}"
-					size="40" />
-
 				<p:outputLabel value="Status" />
 				<p:selectManyCheckbox value="#{pesquisaPedidosBean.filtro.statuses}">
 					<f:selectItems value="#{pesquisaPedidosBean.statuses}" var="status"
@@ -73,10 +69,6 @@
 					style="text-align: center; width: 70px" sortBy="#{pedido.id}">
 					<h:outputText value="#{pedido.id}" />
 				</p:column>
-				<p:column headerText="Fornecedor" sortBy="#{pedido.fornecedor.nome}">
-					<h:outputText value="#{pedido.fornecedor.nome}" />
-				</p:column>
-
 				<p:column headerText="Solicitante" sortBy="#{pedido.solicitante}">
 					<h:outputText value="#{pedido.solicitante.nome}" />
 				</p:column>
@@ -88,14 +80,6 @@
 					</h:outputText>
 				</p:column>
 				
-				<p:column headerText="Valor total"
-					style="text-align: right; width: 90px"
-					sortBy="#{pedido.valorTotal}">
-					<h:outputText value="#{pedido.valorTotal}">
-						<f:convertNumber type="currency" />
-					</h:outputText>
-				</p:column>
-
 				<p:column headerText="Status" style="width: 70px" sortBy="#{pedido.status}">
 					<h:outputText value="#{pedido.status.descricao}" />
 				</p:column>

@@ -22,7 +22,7 @@ public class CadastroOrcamentoService implements Serializable {
 
 		if (orcamento.isNovo()) {
 			orcamento.setDataCriacao(new Date());
-			orcamento.setStatus(StatusOrcamento.ORCAMENTO);
+			orcamento.setStatus(StatusOrcamento.ATIVO);
 		}
 
 		if (orcamento.isNaoAlteravel()) {

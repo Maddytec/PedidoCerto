@@ -12,13 +12,12 @@
 	</f:metadata>
 
 
-	<ui:define name="titulo">#{cadastroOrcamentoBean.baixa ? "Baixa de orçamento" : (cadastroOrcamentoBean.edicao ? "Edição de orçamento" : "Novo orçamento")}</ui:define>
+	<ui:define name="titulo">#{cadastroOrcamentoBean.edicao ? "Edição de orçamento" : "Novo orçamento"}</ui:define>
 
 	<ui:define name="corpo">
 		<h:form id="frmCadastro">
 			<p:focus context="frmCadastro" />
-			<h1>#{cadastroOrcamentoBean.baixa ? "Baixa de orçamento" :
-				(cadastroOrcamentoBean.edicao ? "Edição de orçamento" : "Novo orçamento")}</h1>
+			<h1>#{cadastroOrcamentoBean.edicao ? "Edição de orçamento" : "Novo orçamento"}</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 

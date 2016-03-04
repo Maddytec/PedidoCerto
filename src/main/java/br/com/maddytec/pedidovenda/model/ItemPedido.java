@@ -1,7 +1,6 @@
 package br.com.maddytec.pedidovenda.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +19,6 @@ public class ItemPedido implements Serializable {
 
 	private Long id;
 	private Integer quantidade = 1;
-	private BigDecimal valorUnitario = BigDecimal.ZERO;
 	private Produto produto;
 	private Pedido pedido;
 
@@ -41,15 +39,6 @@ public class ItemPedido implements Serializable {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	@Column(name = "valor_unitario", nullable = false, precision = 10, scale = 2)
-	public BigDecimal getValorUnitario() {
-		return valorUnitario;
-	}
-
-	public void setValorUnitario(BigDecimal valorUnitario) {
-		this.valorUnitario = valorUnitario;
 	}
 
 	@ManyToOne
@@ -95,12 +84,6 @@ public class ItemPedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Transient
-	public BigDecimal getValorTotal() {
-		return this.getValorUnitario().multiply(
-				new BigDecimal(this.getQuantidade()));
 	}
 
 	@Transient

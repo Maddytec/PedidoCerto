@@ -53,7 +53,7 @@
 				<intercept-url pattern="/grupos/**" access="hasAnyRole('ADMINISTRADORES')" />
 		<intercept-url pattern="/categorias/**" access="hasAnyRole('ADMINISTRADORES')" />
 		<intercept-url pattern="/unidadeDeMedida/**" access="hasAnyRole('ADMINISTRADORES')" />
-		<intercept-url pattern="/produtos/**" access="hasAnyRole('ADMINISTRADORES', COMPRADORES)" />
+		<intercept-url pattern="/produtos/**" access="hasAnyRole('ADMINISTRADORES', 'COMPRADORES')" />
 		<intercept-url pattern="/usuarios/**" access="hasAnyRole('ADMINISTRADORES')" />
 
 		<intercept-url pattern="/**" access="denyAll" />

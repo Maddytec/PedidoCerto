@@ -98,7 +98,7 @@
 				<p:column style="text-align: center; width: 80px" exportable="false">
 					<p:button icon="ui-icon-pencil" title="Editar"
 						outcome="/orcamentos/CadastroOrcamento"
-						disabled="#{orcamento.status != 'ORCAMENTO'}">
+						disabled="#{orcamento.status != 'ATIVO'}">
 						<f:param name="orcamento" value="#{orcamento.id}" />
 						<f:event listener="#{cadastroOrcamentoBean.isEditando}"
 							type="preRenderView" />
