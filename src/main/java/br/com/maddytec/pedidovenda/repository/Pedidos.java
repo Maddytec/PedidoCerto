@@ -97,7 +97,6 @@ public class Pedidos implements Serializable {
 	private Criteria criarCriteriaParaFiltro(PedidoFilter filtro) {
 		Session session = manager.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Pedido.class)
-				.createAlias("fornecedor", "f")
 				.createAlias("solicitante", "s");
 
 		if (filtro.getNumeroDe() != null) {
@@ -126,12 +125,6 @@ public class Pedidos implements Serializable {
 			calendar.set(Calendar.HOUR, 23);
 
 			criteria.add(Restrictions.le("dataCriacao", calendar.getTime()));
-		}
-
-		if (StringUtils.isNotBlank(filtro.getNomeFornecedor())) {
-			// acessamos o nome do fornecedor associado ao pedido pelo alias "f"
-			criteria.add(Restrictions.ilike("f.nome", filtro.getNomeFornecedor(),
-					MatchMode.ANYWHERE));
 		}
 
 		if (StringUtils.isNotBlank(filtro.getNomeSolicitante())) {

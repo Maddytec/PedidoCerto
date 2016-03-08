@@ -87,7 +87,7 @@
 				<p:column style="text-align: center; width: 80px" exportable="false">
 					<p:button icon="ui-icon-pencil" title="Editar"
 						outcome="/pedidos/CadastroPedido"
-						disabled="#{pedido.status != 'ORCAMENTO'}">
+						disabled="#{pedido.status != 'ATIVO'}">
 						<f:param name="pedido" value="#{pedido.id}" />
 						<f:event listener="#{cadastroPedidoBean.isEditando}"
 							type="preRenderView" />

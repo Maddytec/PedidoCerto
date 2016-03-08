@@ -31,7 +31,7 @@ public class Pedido implements Serializable {
 	private Long id;
 	private Date dataCriacao;
 	private String observacao;
-	private StatusPedido status = StatusPedido.ORCAMENTO;
+	private StatusPedido status = StatusPedido.ATIVO;
 	private Usuario solicitante;
 	private List<ItemPedido> itens = new ArrayList<>();
 
@@ -132,7 +132,7 @@ public class Pedido implements Serializable {
 	}
 
 	public void adicionarItemVazio() {
-		if (this.isOrcamento()) {
+		if (this.isOrcamentoAtivo()) {
 			Produto produto = new Produto();
 
 			ItemPedido item = new ItemPedido();
@@ -144,8 +144,8 @@ public class Pedido implements Serializable {
 	}
 
 	@Transient
-	public boolean isOrcamento() {
-		return StatusPedido.ORCAMENTO.equals(this.getStatus());
+	public boolean isOrcamentoAtivo() {
+		return StatusPedido.ATIVO.equals(this.getStatus());
 	}
 
 	public void removerItemVazio() {
@@ -163,7 +163,7 @@ public class Pedido implements Serializable {
 
 	@Transient
 	public boolean isEmissivel() {
-		return this.isExistente() && this.isOrcamento();
+		return this.isExistente() && this.isOrcamentoAtivo();
 	}
 
 	@Transient
@@ -188,7 +188,7 @@ public class Pedido implements Serializable {
 
 	@Transient
 	private boolean isAlteravel() {
-		return isOrcamento();
+		return isOrcamentoAtivo();
 	}
 
 	@Transient

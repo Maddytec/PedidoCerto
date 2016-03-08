@@ -14,7 +14,6 @@ public class PedidoFilter implements Serializable {
 	private Date dataCriacaoDe;
 	private Date dataCriacaoAte;
 	private String nomeSolicitante;
-	private String nomeFornecedor;
 	private StatusPedido[] statuses;
 
 	private int primeiroRegistro;
@@ -60,14 +59,6 @@ public class PedidoFilter implements Serializable {
 
 	public void setNomeSolicitante(String nomeSolicitante) {
 		this.nomeSolicitante = nomeSolicitante;
-	}
-
-	public String getNomeFornecedor() {
-		return nomeFornecedor;
-	}
-
-	public void setNomeFornecedor(String nomeFornecedor) {
-		this.nomeFornecedor = nomeFornecedor;
 	}
 
 	public StatusPedido[] getStatuses() {

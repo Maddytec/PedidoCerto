@@ -22,7 +22,7 @@ public class CadastroPedidoService implements Serializable {
 
 		if (pedido.isNovo()) {
 			pedido.setDataCriacao(new Date());
-			pedido.setStatus(StatusPedido.ORCAMENTO);
+			pedido.setStatus(StatusPedido.ATIVO);
 		}
 
 		if (pedido.isNaoAlteravel()) {
